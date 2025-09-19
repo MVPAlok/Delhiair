@@ -7,41 +7,69 @@ export const mockAQIData = {
       name: "Anand Vihar",
       aqi: 450,
       status: "Severe",
-      coordinates: { top: "30%", left: "40%" },
+      coordinates: { top: "35%", left: "56%" },
       color: "bg-danger-red",
-      description: "Industrial area with heavy traffic"
+      description: "Major transport hub with heavy traffic"
     },
     {
       id: 2,
       name: "Gurugram",
       aqi: 320,
       status: "Very Poor",
-      coordinates: { top: "50%", left: "55%" },
+      coordinates: { top: "55%", left: "40%" },
       color: "bg-warning-orange",
-      description: "Commercial hub with construction activities"
+      description: "IT & Financial district with construction"
     },
     {
       id: 3,
       name: "Lodhi Road",
       aqi: 85,
       status: "Satisfactory",
-      coordinates: { top: "65%", left: "45%" },
+      coordinates: { top: "62%", left: "48%" },
       color: "bg-fresh-green",
       description: "Green belt area with parks"
     },
     {
       id: 4,
-      name: "Noida",
+      name: "Noida Sector 62",
       aqi: 150,
       status: "Moderate",
-      coordinates: { top: "40%", left: "65%" },
+      coordinates: { top: "40%", left: "68%" },
       color: "bg-yellow-400",
-      description: "Planned city with IT sector"
+      description: "IT corridor with moderate traffic"
+    },
+    {
+      id: 5,
+      name: "Dwarka",
+      aqi: 180,
+      status: "Moderate",
+      coordinates: { top: "45%", left: "32%" },
+      color: "bg-yellow-500",
+      description: "Residential area near airport"
+    },
+    {
+      id: 6,
+      name: "Rohini",
+      aqi: 220,
+      status: "Poor",
+      coordinates: { top: "25%", left: "45%" },
+      color: "bg-orange-500",
+      description: "Dense residential with industrial areas"
     }
   ],
   lastUpdated: "2 minutes ago",
-  averageAQI: 251,
-  trend: "increasing"
+  averageAQI: 234,
+  trend: "increasing",
+  regions: {
+    central_delhi: { avg_aqi: 180, status: "Moderate" },
+    south_delhi: { avg_aqi: 120, status: "Moderate" },
+    north_delhi: { avg_aqi: 250, status: "Poor" },
+    east_delhi: { avg_aqi: 380, status: "Very Poor" },
+    west_delhi: { avg_aqi: 200, status: "Poor" },
+    gurugram: { avg_aqi: 320, status: "Very Poor" },
+    noida: { avg_aqi: 150, status: "Moderate" },
+    faridabad: { avg_aqi: 280, status: "Poor" }
+  }
 };
 
 export const mockAQICategories = [
