@@ -132,14 +132,15 @@ const HeroSection = () => {
     >
       {/* Background Image with Overlay */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1701523978320-028cb93c194c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwzfHxkZWxoaSUyMHBvbGx1dGlvbnxlbnwwfHx8fDE3NTgzMTgwNjl8MA&ixlib=rb-4.1.0&q=85')`
+          backgroundImage: `url('https://images.unsplash.com/photo-1644674649847-0690247ae9ee?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwxfHxkZWxoaSUyMHBvbGx1dGlvbnxlbnwwfHx8fDE3NTgzMTgwNjl8MA&ixlib=rb-4.1.0&q=85')`
         }}
       />
       
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-dark-charcoal/70 to-transparent z-5" />
+      {/* Multiple Gradient Overlays for pollution effect */}
+      <div className="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-dark-charcoal/60 to-dark-charcoal/30 z-5" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-warning-orange/5 to-transparent z-6" />
       
       {/* Animated Pollution Particles */}
       <PollutionParticles />
