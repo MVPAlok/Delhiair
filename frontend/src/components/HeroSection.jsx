@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { MapPin, BarChart3 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const PollutionParticles = () => {
   const canvasRef = useRef(null);
