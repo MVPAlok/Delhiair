@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { mockSolutions } from "../mock/mockData";
 
 const StakeholderSolutions = () => {
+  const navigate = useNavigate();
+
+  const handlePolicyDashboardClick = () => {
+    navigate("/policy-dashboard");
+  };
   return (
     <section id="solutions" className="py-20 bg-dark-charcoal text-light-gray">
       <div className="container mx-auto px-6">
