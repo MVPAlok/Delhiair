@@ -112,6 +112,8 @@ const PollutionParticles = () => {
 };
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  
   const scrollToAQI = () => {
     const element = document.getElementById("aqi-snapshot");
     if (element) {
@@ -119,11 +121,8 @@ const HeroSection = () => {
     }
   };
 
-  const scrollToCTA = () => {
-    const element = document.getElementById("cta");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+  const goToPolicyDashboard = () => {
+    navigate("/policy-dashboard");
   };
 
   return (
