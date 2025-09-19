@@ -52,7 +52,18 @@ module.exports = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+  			// Custom DelhiAir.AI Colors
+  			'fresh-green': '#27AE60',
+  			'tech-blue': '#2F80ED',
+  			'warning-orange': '#F2994A',
+  			'danger-red': '#EB5757',
+  			'dark-charcoal': '#1C1C1C',
+  			'light-gray': '#F2F2F2',
+  			'pure-white': '#FFFFFF',
+  			'aqua-teal': '#00C9A7',
+  			'saffron': '#FF9933',
+  			'india-green': '#138808'
   		},
   		keyframes: {
   			'accordion-down': {
