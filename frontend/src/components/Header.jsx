@@ -17,7 +17,7 @@ const Header = () => {
       <nav className="container mx-auto px-6 py-2 flex justify-between items-center">
         <button
           onClick={() => scrollToSection("hero")}
-          className="font-extrabold text-3xl tracking-wider bg-gradient-to-r from-saffron via-pure-white to-india-green bg-clip-text text-transparent hover:scale-105 transition-transform"
+          className="font-extrabold text-2xl tracking-wider bg-gradient-to-r from-saffron via-pure-white to-india-green bg-clip-text text-transparent hover:scale-105 transition-transform"
         >
           DelhiAir.AI
         </button>
