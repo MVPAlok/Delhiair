@@ -51,8 +51,8 @@ const Header = () => {
         </div>
 
         {/* Get Started Button */}
-        <button className="hidden md:block bg-gradient-to-r from-saffron via-pure-white to-india-green p-0.5 rounded-full font-bold text-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-          <span className="block bg-dark-charcoal text-pure-white py-3 px-6 rounded-full">
+        <button className="hidden md:block bg-gradient-to-r from-saffron via-pure-white to-india-green p-0.5 rounded-full font-bold text-base hover:shadow-xl transition-all duration-300 hover:scale-105">
+          <span className="block bg-dark-charcoal text-pure-white py-2 px-5 rounded-full">
             Get Started
           </span>
         </button>
