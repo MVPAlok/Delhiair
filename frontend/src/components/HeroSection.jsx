@@ -13,29 +13,43 @@ const PollutionParticles = () => {
     canvas.height = window.innerHeight;
 
     const particles = [];
-    const particleCount = 80;
+    const particleCount = 120;
 
     class Particle {
       constructor() {
         this.reset();
         this.y = Math.random() * canvas.height;
-        this.opacity = Math.random() * 0.3 + 0.1;
+        this.opacity = Math.random() * 0.6 + 0.2;
+        this.color = this.getRandomColor();
+      }
+
+      getRandomColor() {
+        const colors = ['#F2994A', '#EB5757', '#FF9933', '#666666', '#999999'];
+        return colors[Math.floor(Math.random() * colors.length)];
       }
 
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = -10;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = (Math.random() - 0.5) * 0.5;
-        this.speedY = Math.random() * 0.8 + 0.2;
-        this.opacity = Math.random() * 0.3 + 0.1;
+        this.size = Math.random() * 4 + 1;
+        this.speedX = (Math.random() - 0.5) * 1;
+        this.speedY = Math.random() * 1.2 + 0.3;
+        this.opacity = Math.random() * 0.6 + 0.2;
+        this.color = this.getRandomColor();
+        this.drift = Math.sin(this.y * 0.01) * 0.5;
       }
 
       update() {
-        this.x += this.speedX;
+        this.x += this.speedX + this.drift;
         this.y += this.speedY;
+        this.drift = Math.sin(this.y * 0.01) * 0.5;
 
-        if (this.y > canvas.height + 10) {
+        // Fade effect
+        if (this.y > canvas.height * 0.7) {
+          this.opacity *= 0.98;
+        }
+
+        if (this.y > canvas.height + 10 || this.opacity < 0.01) {
           this.reset();
         }
         if (this.x < -10 || this.x > canvas.width + 10) {
@@ -46,10 +60,18 @@ const PollutionParticles = () => {
       draw() {
         ctx.save();
         ctx.globalAlpha = this.opacity;
-        ctx.fillStyle = "#F2994A";
+        ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
+        
+        // Add glow effect for some particles
+        if (Math.random() > 0.8) {
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = this.color;
+          ctx.fill();
+        }
+        
         ctx.restore();
       }
     }
