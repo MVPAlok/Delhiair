@@ -173,7 +173,7 @@ const HeroSection = () => {
           </button>
           
           <button
-            onClick={scrollToCTA}
+            onClick={goToPolicyDashboard}
             className="bg-gradient-to-r from-india-green to-fresh-green text-white font-bold py-4 px-8 rounded-full text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 w-full sm:w-auto flex items-center justify-center gap-3 hover:from-fresh-green hover:to-india-green"
           >
             <BarChart3 size={24} />
