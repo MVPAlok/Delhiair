@@ -50,7 +50,10 @@ const StakeholderSolutions = () => {
                 {solution.description}
               </p>
               
-              <div className="flex items-center gap-2 group/link cursor-pointer">
+              <div 
+                className="flex items-center gap-2 group/link cursor-pointer"
+                onClick={solution.id === 2 ? handlePolicyDashboardClick : undefined}
+              >
                 <span className={`font-semibold ${solution.linkColor} group-hover/link:underline transition-all duration-300`}>
                   {solution.link}
                 </span>
