@@ -148,7 +148,7 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-20 px-4 max-w-5xl mx-auto">
         <div className="animate-fade-in-up opacity-0" style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-pure-white leading-tight mb-6">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-pure-white leading-tight mb-6">
             AI-Driven Clarity for{" "}
             <span className="bg-gradient-to-r from-saffron via-pure-white to-india-green bg-clip-text text-transparent">
               Delhi's Air
