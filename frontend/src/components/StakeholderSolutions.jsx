@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowRight, Smartphone, BarChart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { mockSolutions } from "../mock/mockData";
 
 const StakeholderSolutions = () => {
