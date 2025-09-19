@@ -14,7 +14,7 @@ const Header = () => {
 
   return (
     <header className="bg-dark-charcoal/95 backdrop-blur-sm text-light-gray fixed top-0 left-0 right-0 z-50 shadow-xl border-b border-saffron/20">
-      <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+      <nav className="container mx-auto px-6 py-2 flex justify-between items-center">
         <button
           onClick={() => scrollToSection("hero")}
           className="font-extrabold text-3xl tracking-wider bg-gradient-to-r from-saffron via-pure-white to-india-green bg-clip-text text-transparent hover:scale-105 transition-transform"
