@@ -122,7 +122,7 @@ const HeroSection = () => {
   };
 
   const goToPolicyDashboard = () => {
-    navigate("/policy-dashboard");
+    navigate("/dashboards/policy");
   };
 
   return (

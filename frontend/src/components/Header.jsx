@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import LoginModal from "./auth/LoginModal";
+import SignupModal from "./auth/SignupModal";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -10,6 +18,11 @@ const Header = () => {
       element.scrollIntoView({ behavior: "smooth" });
     }
     setIsMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
@@ -50,12 +63,44 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Get Started Button */}
-        <button className="hidden md:block bg-gradient-to-r from-saffron via-pure-white to-india-green p-0.5 rounded-full font-bold text-base hover:shadow-xl transition-all duration-300 hover:scale-105">
-          <span className="block bg-dark-charcoal text-pure-white py-2 px-5 rounded-full">
-            Get Started
-          </span>
-        </button>
+        {/* Auth Buttons or User Menu */}
+        <div className="hidden md:flex items-center space-x-4">
+          {user ? (
+            <div className="relative group">
+              <button className="flex items-center space-x-2 bg-dark-gunmetal px-4 py-2 rounded-full hover:bg-dark-gunmetal/80 transition-colors">
+                <User size={20} />
+                <span>{user.name}</span>
+              </button>
+              <div className="absolute right-0 mt-2 w-48 py-2 bg-dark-gunmetal rounded-lg shadow-xl invisible group-hover:visible transition-all">
+                <div className="px-4 py-2 text-sm text-light-gray capitalize">{user.role}</div>
+                <div className="border-t border-saffron/20"></div>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left px-4 py-2 text-sm text-light-gray hover:text-pure-white hover:bg-dark-charcoal/50 transition-colors"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <button
+                onClick={() => setIsLoginModalOpen(true)}
+                className="text-pure-white hover:text-aqua-teal transition-colors duration-300 font-medium"
+              >
+                Login
+              </button>
+              <button
+                onClick={() => setIsSignupModalOpen(true)}
+                className="bg-gradient-to-r from-saffron via-pure-white to-india-green p-0.5 rounded-full font-bold text-base hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                <span className="block bg-dark-charcoal text-pure-white py-2 px-5 rounded-full">
+                  Sign Up
+                </span>
+              </button>
+            </>
+          )}
+        </div>
 
         {/* Mobile Menu Button */}
         <button
@@ -94,14 +139,55 @@ const Header = () => {
             >
               About
             </button>
-            <button className="w-full bg-gradient-to-r from-saffron via-pure-white to-india-green p-0.5 rounded-full font-bold text-lg hover:shadow-xl transition-all duration-300">
-              <span className="block bg-dark-charcoal text-pure-white py-3 px-6 rounded-full">
-                Get Started
-              </span>
-            </button>
+            {user ? (
+              <>
+                <div className="text-sm text-light-gray px-2">
+                  Signed in as <span className="font-medium">{user.name}</span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left text-aqua-teal hover:text-pure-white transition-colors duration-300 font-medium"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    setIsLoginModalOpen(true);
+                    setIsMenuOpen(false);
+                  }}
+                  className="block w-full text-left text-aqua-teal hover:text-pure-white transition-colors duration-300 font-medium"
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => {
+                    setIsSignupModalOpen(true);
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full bg-gradient-to-r from-saffron via-pure-white to-india-green p-0.5 rounded-full font-bold text-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <span className="block bg-dark-charcoal text-pure-white py-2 px-6 rounded-full">
+                    Sign Up
+                  </span>
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
+
+      {/* Auth Modals */}
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+      />
+      <SignupModal
+        isOpen={isSignupModalOpen}
+        onClose={() => setIsSignupModalOpen(false)}
+      />
     </header>
   );
 };

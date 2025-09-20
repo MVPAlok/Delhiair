@@ -1,0 +1,17 @@
+{
+  "name": "sih-project",
+  "version": "1.0.0",
+  "description": "SIH Project with frontend and backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && uvicorn server:app --reload",
+    "install:all": "cd frontend && npm install && cd ../backend && pip install -r requirements.txt",
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm start"
+  },
+  "keywords": ["sih", "project"],
+  "author": "",
+  "license": "ISC"
+}

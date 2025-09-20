@@ -181,24 +181,28 @@ export const AuthProvider = ({ children }) => {
     setNotifications(roleNotifications[userData.role] || []);
   };
 
-  const login = async (email, password) => {
+  const login = async (email, password, role) => {
     setLoading(true);
     
-    // Mock authentication - in real app, this would be an API call
-    return new Promise((resolve, reject) => {
+    // Mock authentication - accepting any credentials but using selected role
+    return new Promise((resolve) => {
       setTimeout(() => {
-        const userData = mockUsers[email];
-        if (userData && password === 'password123') {
-          setUser(userData);
-          localStorage.setItem('delhiair_user', JSON.stringify(userData));
-          loadNotifications(userData);
-          setLoading(false);
-          resolve(userData);
-        } else {
-          setLoading(false);
-          reject(new Error('Invalid credentials'));
-        }
-      }, 1000);
+        // Create a user object based on the selected role
+        const userData = {
+          id: Date.now(),
+          email: email,
+          name: email.split('@')[0],
+          role: role,
+          avatar: getRoleAvatar(role),
+          preferences: getDefaultPreferences(role)
+        };
+        
+        setUser(userData);
+        localStorage.setItem('delhiair_user', JSON.stringify(userData));
+        loadNotifications(userData);
+        setLoading(false);
+        resolve(userData);
+      }, 500);
     });
   };
 
