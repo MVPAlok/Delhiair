@@ -15,7 +15,10 @@ import {
   TrendingUp,
   Settings,
   Heart,
-  Shield
+  Shield,
+  Eye,
+  Droplets,
+  Sun
 } from 'lucide-react';
 
 const CitizenDashboard = () => {
@@ -23,9 +26,17 @@ const CitizenDashboard = () => {
   const { user } = useAuth();
   const [selectedLocation, setSelectedLocation] = useState("current");
   const [currentAQI, setCurrentAQI] = useState(156);
+  const [activeAlerts, setActiveAlerts] = useState(3);
 
   return (
     <div className="min-h-screen bg-light-gray">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-4 -left-4 w-72 h-72 bg-gradient-to-r from-blue-200/30 to-cyan-200/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-1/2 -right-8 w-96 h-96 bg-gradient-to-l from-green-200/20 to-blue-200/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-8 left-1/3 w-80 h-80 bg-gradient-to-t from-orange-200/20 to-red-200/20 rounded-full blur-3xl animate-pulse"></div>
+      </div>
+
       {/* Header */}
       <header className="bg-dark-charcoal text-pure-white shadow-xl border-b-2 border-aqua-teal">
         <div className="container mx-auto px-6 py-4">
@@ -72,9 +83,9 @@ const CitizenDashboard = () => {
                 <span className="text-sm font-medium">Delhi, India</span>
               </div>
               
-              {/* Notifications */}
+              {/* Action Buttons */}
               <div className="flex gap-2">
-                <button className="flex items-center gap-2 bg-fresh-green hover:bg-fresh-green/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
+                <button className="flex items-center gap-2 bg-danger-red hover:bg-danger-red/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
                   <Bell size={16} />
                   <span className="hidden md:inline">Alerts</span>
                 </button>
@@ -88,95 +99,110 @@ const CitizenDashboard = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-6">
+      <div className="container mx-auto px-6 py-6 relative">
         <div className="grid grid-cols-12 gap-6 h-full">
-          {/* Current AQI Display - Full Width */}
+          {/* Current AQI Display - Enhanced with glassmorphism */}
           <div className="col-span-12">
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-white/30 hover:shadow-3xl transition-all duration-500 relative overflow-hidden">
+              {/* Animated background gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-400/10 via-red-400/5 to-yellow-400/10 animate-pulse"></div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
                 <div className="col-span-1 md:col-span-2">
-                  <h2 className="text-xl font-bold text-dark-charcoal mb-4 flex items-center gap-2">
-                    <Activity size={20} className="text-aqua-teal" />
+                  <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                    <Activity size={24} className="text-cyan-600" />
                     Current Air Quality
                   </h2>
-                  <div className="flex items-center space-x-6">
-                    <div className="relative">
-                      <div className="w-32 h-32 rounded-full bg-gradient-to-br from-warning-orange to-danger-red flex items-center justify-center shadow-lg">
-                        <div className="w-28 h-28 rounded-full bg-pure-white flex items-center justify-center">
+                  <div className="flex items-center space-x-8">
+                    <div className="relative group">
+                      <div className="w-36 h-36 rounded-full bg-gradient-to-br from-orange-400 via-red-500 to-red-600 flex items-center justify-center shadow-2xl group-hover:shadow-3xl transition-all duration-300 animate-pulse">
+                        <div className="w-32 h-32 rounded-full bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-inner">
                           <div className="text-center">
-                            <div className="text-4xl font-bold text-dark-charcoal">{currentAQI}</div>
-                            <div className="text-sm text-dark-charcoal/70">AQI</div>
+                            <div className="text-5xl font-bold text-slate-800 mb-1">{currentAQI}</div>
+                            <div className="text-sm text-slate-600 font-medium">AQI</div>
                           </div>
                         </div>
                       </div>
-                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-danger-red rounded-full flex items-center justify-center">
-                        <AlertTriangle size={14} className="text-white" />
+                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                        <AlertTriangle size={16} className="text-white" />
                       </div>
+                      {/* Pulsing rings */}
+                      <div className="absolute inset-0 rounded-full border-4 border-red-500/30 animate-ping"></div>
+                      <div className="absolute inset-2 rounded-full border-2 border-orange-500/20 animate-ping"></div>
                     </div>
-                    <div>
-                      <div className="text-xl font-semibold text-warning-orange mb-2">Moderate</div>
-                      <p className="text-sm text-dark-charcoal/70 max-w-xs leading-relaxed">
+                    <div className="space-y-3">
+                      <div className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">Moderate</div>
+                      <p className="text-slate-700 max-w-xs leading-relaxed">
                         Air quality is acceptable; however, some pollutants may be a concern for sensitive individuals.
                       </p>
-                      <div className="mt-3 flex items-center gap-2">
-                        <div className="w-2 h-2 bg-warning-orange rounded-full animate-pulse"></div>
-                        <span className="text-xs text-dark-charcoal/60">Updated 2 minutes ago</span>
+                      <div className="flex items-center gap-3">
+                        <div className="w-3 h-3 bg-gradient-to-r from-green-400 to-green-500 rounded-full animate-pulse shadow-sm"></div>
+                        <span className="text-xs text-slate-600 font-medium">Updated 2 minutes ago</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-br from-saffron/10 to-warning-orange/10 p-4 rounded-xl border border-saffron/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Wind className="text-saffron" size={20} />
-                    <span className="font-semibold text-dark-charcoal">PM2.5</span>
+                {/* Enhanced metric cards */}
+                <div className="bg-gradient-to-br from-orange-50 to-yellow-50 p-6 rounded-2xl border border-orange-200/50 shadow-lg hover:shadow-xl transition-all duration-300 group">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Wind className="text-orange-600 group-hover:animate-spin" size={24} />
+                    <span className="font-bold text-slate-800">PM2.5</span>
                   </div>
-                  <div className="text-2xl font-bold text-saffron">85 μg/m³</div>
-                  <div className="text-sm text-dark-charcoal/70">Above threshold</div>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">85 μg/m³</div>
+                  <div className="text-sm text-slate-600 font-medium mt-1">Above threshold</div>
+                  <div className="w-full bg-orange-200 rounded-full h-2 mt-3">
+                    <div className="bg-gradient-to-r from-orange-500 to-red-500 h-2 rounded-full w-3/4 animate-pulse"></div>
+                  </div>
                 </div>
                 
-                <div className="bg-gradient-to-br from-fresh-green/10 to-india-green/10 p-4 rounded-xl border border-fresh-green/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Thermometer className="text-fresh-green" size={20} />
-                    <span className="font-semibold text-dark-charcoal">Temperature</span>
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-2xl border border-green-200/50 shadow-lg hover:shadow-xl transition-all duration-300 group">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Thermometer className="text-green-600 group-hover:animate-bounce" size={24} />
+                    <span className="font-bold text-slate-800">Temperature</span>
                   </div>
-                  <div className="text-2xl font-bold text-fresh-green">28°C</div>
-                  <div className="text-sm text-dark-charcoal/70">Feels like 30°C</div>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">28°C</div>
+                  <div className="text-sm text-slate-600 font-medium mt-1">Feels like 30°C</div>
+                  <div className="flex items-center gap-2 mt-3">
+                    <Sun size={16} className="text-yellow-500 animate-spin" />
+                    <span className="text-xs text-slate-600">Partly sunny</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Left Content - Trends and Stations */}
+          {/* Left Content - Enhanced with better visuals */}
           <div className="col-span-12 lg:col-span-8 space-y-6">
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
-                  <TrendingUp size={20} className="text-tech-blue" />
+            <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-slate-800 flex items-center gap-3">
+                  <TrendingUp size={24} className="text-blue-600" />
                   24-Hour AQI Trend
                 </h3>
-                <select className="text-sm border border-light-gray rounded px-2 py-1">
+                <select className="bg-white/50 backdrop-blur-sm border border-white/30 rounded-xl px-4 py-2 text-sm font-medium shadow-lg">
                   <option>Last 24 Hours</option>
                   <option>Last 7 Days</option>
                   <option>Last 30 Days</option>
                 </select>
               </div>
-              <div className="h-64 flex items-center justify-center border-2 border-dashed border-light-gray/50 rounded-xl bg-light-gray/20">
-                <div className="text-center text-dark-charcoal/60">
-                  <TrendingUp size={48} className="mx-auto mb-2 text-tech-blue/60" />
-                  <p className="font-medium">AQI Trend Analysis</p>
-                  <p className="text-sm">Interactive chart showing air quality changes</p>
+              <div className="h-64 flex items-center justify-center border-2 border-dashed border-blue-300/50 rounded-2xl bg-gradient-to-br from-blue-50/50 to-cyan-50/50 backdrop-blur-sm relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400/5 via-transparent to-cyan-400/5 animate-pulse"></div>
+                <div className="text-center text-slate-700 relative z-10">
+                  <TrendingUp size={64} className="mx-auto mb-4 text-blue-500/60 animate-bounce" />
+                  <p className="font-semibold text-lg mb-2">AQI Trend Analysis</p>
+                  <p className="text-sm text-slate-600">Interactive chart showing air quality changes</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
-                  <MapPin size={20} className="text-aqua-teal" />
+            <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-slate-800 flex items-center gap-3">
+                  <MapPin size={24} className="text-cyan-600" />
                   Nearby Monitoring Stations
                 </h3>
-                <button className="text-sm text-aqua-teal hover:underline">
+                <button className="text-sm text-cyan-600 hover:text-cyan-700 font-semibold hover:underline transition-colors">
                   View All Stations
                 </button>
               </div>
@@ -204,21 +230,21 @@ const CitizenDashboard = () => {
                     trend: "worsening"
                   }
                 ].map((station, i) => (
-                  <div key={i} className="flex items-center justify-between p-4 rounded-xl hover:bg-light-gray/30 transition-all duration-300 border border-light-gray/30">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-3 h-3 rounded-full ${
-                        station.trend === 'improving' ? 'bg-fresh-green animate-pulse' :
-                        station.trend === 'worsening' ? 'bg-danger-red animate-pulse' :
-                        'bg-warning-orange'
+                  <div key={i} className="group flex items-center justify-between p-5 rounded-2xl hover:bg-white/50 backdrop-blur-sm transition-all duration-300 border border-white/20 shadow-lg hover:shadow-xl transform hover:scale-[1.02]">
+                    <div className="flex items-center gap-4">
+                      <div className={`w-4 h-4 rounded-full shadow-lg ${
+                        station.trend === 'improving' ? 'bg-gradient-to-r from-green-400 to-green-500 animate-pulse' :
+                        station.trend === 'worsening' ? 'bg-gradient-to-r from-red-400 to-red-500 animate-pulse' :
+                        'bg-gradient-to-r from-yellow-400 to-orange-400'
                       }`}></div>
                       <div>
-                        <h4 className="font-medium text-dark-charcoal">{station.name}</h4>
-                        <div className="text-sm text-dark-charcoal/60">{station.distance} away</div>
+                        <h4 className="font-semibold text-slate-800 group-hover:text-cyan-600 transition-colors">{station.name}</h4>
+                        <div className="text-sm text-slate-600">{station.distance} away • {station.status}</div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-xl font-bold text-dark-charcoal">{station.aqi}</div>
-                      <div className="text-sm text-dark-charcoal/60">AQI</div>
+                      <div className="text-2xl font-bold text-slate-800">{station.aqi}</div>
+                      <div className="text-sm text-slate-600 font-medium">AQI</div>
                     </div>
                   </div>
                 ))}
@@ -226,15 +252,15 @@ const CitizenDashboard = () => {
             </div>
           </div>
 
-          {/* Right Sidebar - Alerts and Health */}
+          {/* Right Sidebar - Enhanced styling */}
           <div className="col-span-12 lg:col-span-4 space-y-6">
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
-                  <Bell size={20} className="text-warning-orange" />
+            <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-slate-800 flex items-center gap-3">
+                  <Bell size={24} className="text-red-600 animate-pulse" />
                   Recent Alerts
                 </h3>
-                <span className="text-xs bg-danger-red/20 text-danger-red px-2 py-1 rounded-full">
+                <span className="bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-bounce">
                   2 New
                 </span>
               </div>
@@ -259,15 +285,15 @@ const CitizenDashboard = () => {
                     icon: "🎯"
                   }
                 ].map((alert, i) => (
-                  <div key={i} className={`p-3 rounded-xl border transition-all duration-300 hover:shadow-md ${
-                    alert.type === 'warning' ? 'bg-warning-orange/10 border-warning-orange/30' :
-                    'bg-aqua-teal/10 border-aqua-teal/30'
+                  <div key={i} className={`group p-4 rounded-2xl border transition-all duration-300 hover:shadow-lg transform hover:scale-[1.02] ${
+                    alert.type === 'warning' ? 'bg-gradient-to-r from-red-50 to-orange-50 border-red-200/50' :
+                    'bg-gradient-to-r from-cyan-50 to-blue-50 border-cyan-200/50'
                   }`}>
                     <div className="flex items-start space-x-3">
-                      <span className="text-lg">{alert.icon}</span>
+                      <span className="text-xl group-hover:animate-bounce">{alert.icon}</span>
                       <div className="flex-1">
-                        <p className="text-dark-charcoal font-medium text-sm">{alert.message}</p>
-                        <p className="text-xs text-dark-charcoal/60 mt-1">{alert.time}</p>
+                        <p className="text-slate-800 font-medium text-sm leading-relaxed">{alert.message}</p>
+                        <p className="text-xs text-slate-600 mt-2 font-medium">{alert.time}</p>
                       </div>
                     </div>
                   </div>
@@ -275,65 +301,64 @@ const CitizenDashboard = () => {
               </div>
             </div>
 
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
-                  <Heart size={20} className="text-danger-red" />
+            <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-slate-800 flex items-center gap-3">
+                  <Heart size={24} className="text-red-500 animate-pulse" />
                   Health Recommendations
                 </h3>
-                <Shield size={16} className="text-fresh-green" />
+                <Shield size={20} className="text-green-500" />
               </div>
               <div className="space-y-4">
-                <div className="bg-gradient-to-r from-danger-red/10 to-warning-orange/10 p-4 rounded-xl border border-danger-red/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-lg">😷</span>
-                    <span className="font-semibold text-dark-charcoal text-sm">Mask Usage</span>
+                <div className="group bg-gradient-to-r from-red-50 to-orange-50 p-5 rounded-2xl border border-red-200/50 hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-xl group-hover:animate-bounce">😷</span>
+                    <span className="font-bold text-slate-800">Mask Usage</span>
                   </div>
-                  <p className="text-xs text-dark-charcoal/70 leading-relaxed">
+                  <p className="text-sm text-slate-700 leading-relaxed">
                     Wear N95 masks when going outdoors. Current AQI levels may affect sensitive individuals.
                   </p>
                 </div>
                 
-                <div className="bg-gradient-to-r from-tech-blue/10 to-aqua-teal/10 p-4 rounded-xl border border-tech-blue/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-lg">🏠</span>
-                    <span className="font-semibold text-dark-charcoal text-sm">Indoor Air</span>
+                <div className="group bg-gradient-to-r from-blue-50 to-cyan-50 p-5 rounded-2xl border border-blue-200/50 hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-xl group-hover:animate-bounce">🏠</span>
+                    <span className="font-bold text-slate-800">Indoor Air</span>
                   </div>
-                  <p className="text-xs text-dark-charcoal/70 leading-relaxed">
+                  <p className="text-sm text-slate-700 leading-relaxed">
                     Keep windows closed during peak pollution hours. Use air purifiers if available.
                   </p>
                 </div>
                 
-                <div className="bg-gradient-to-r from-fresh-green/10 to-india-green/10 p-4 rounded-xl border border-fresh-green/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-lg">🏃</span>
-                    <span className="font-semibold text-dark-charcoal text-sm">Exercise</span>
+                <div className="group bg-gradient-to-r from-green-50 to-emerald-50 p-5 rounded-2xl border border-green-200/50 hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-xl group-hover:animate-bounce">🏃</span>
+                    <span className="font-bold text-slate-800">Exercise</span>
                   </div>
-                  <p className="text-xs text-dark-charcoal/70 leading-relaxed">
+                  <p className="text-sm text-slate-700 leading-relaxed">
                     Consider indoor activities. Avoid prolonged outdoor exercise during high pollution periods.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <h3 className="font-bold text-dark-charcoal mb-4 flex items-center gap-2">
-                <Settings size={20} className="text-saffron" />
+            <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
+              <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                <Settings size={24} className="text-orange-600" />
                 Quick Actions
               </h3>
               <div className="space-y-3">
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-light-gray/50 transition-colors duration-300 text-sm">
-                  📧 Set Custom Alerts
-                </button>
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-light-gray/50 transition-colors duration-300 text-sm">
-                  📱 Download App
-                </button>
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-light-gray/50 transition-colors duration-300 text-sm">
-                  📊 Share Data
-                </button>
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-light-gray/50 transition-colors duration-300 text-sm">
-                  📅 Weekly Report
-                </button>
+                {[
+                  { icon: "📧", text: "Set Custom Alerts" },
+                  { icon: "📱", text: "Download App" },
+                  { icon: "📊", text: "Share Data" },
+                  { icon: "📅", text: "Weekly Report" }
+                ].map((action, i) => (
+                  <button key={i} className="group w-full text-left p-4 rounded-xl hover:bg-white/50 backdrop-blur-sm transition-all duration-300 text-sm border border-white/20 hover:shadow-lg transform hover:scale-[1.02] hover:border-cyan-300/50">
+                    <span className="group-hover:animate-bounce inline-block mr-3">{action.icon}</span>
+                    <span className="font-medium text-slate-800 group-hover:text-cyan-600 transition-colors">{action.text}</span>
+                  </button>
+                ))}
               </div>
             </div>
           </div>
@@ -342,7 +367,5 @@ const CitizenDashboard = () => {
     </div>
   );
 };
-
-
 
 export default CitizenDashboard;
