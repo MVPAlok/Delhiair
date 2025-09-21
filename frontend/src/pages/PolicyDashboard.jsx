@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import { 
   ArrowLeft, 
   Download, 
@@ -15,15 +16,16 @@ import {
   FileText,
   Settings
 } from "lucide-react";
-import AQIHeatMap from "../components/dashboard/AQIHeatMap";
-import SourceContribution from "../components/dashboard/SourceContribution";
-import ForecastingPanel from "../components/dashboard/ForecastingPanel";
-import PolicyEffectiveness from "../components/dashboard/PolicyEffectiveness";
-import AIRecommendations from "../components/dashboard/AIRecommendations";
-import StationDataTable from "../components/dashboard/StationDataTable";
+import AQIHeatMap from "../components/dashboards/PolicyDashboard/AQIHeatMap";
+import SourceContribution from "../components/dashboards/PolicyDashboard/SourceContribution";
+import ForecastingPanel from "../components/dashboards/PolicyDashboard/ForecastingPanel";
+import PolicyEffectiveness from "../components/dashboards/PolicyDashboard/PolicyEffectiveness";
+import AIRecommendations from "../components/dashboards/PolicyDashboard/AIRecommendations";
+import StationDataTable from "../components/dashboards/PolicyDashboard/StationDataTable";
 
 const PolicyDashboard = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [selectedTimeRange, setSelectedTimeRange] = useState("24h");
   const [selectedRegion, setSelectedRegion] = useState("all");
   const [activeAlerts, setActiveAlerts] = useState(3);
@@ -69,9 +71,30 @@ const PolicyDashboard = () => {
               <h1 className="text-2xl font-bold bg-gradient-to-r from-saffron via-pure-white to-india-green bg-clip-text text-transparent">
                 🏛️ Policy Dashboard
               </h1>
+              {user && (
+                <p className="text-sm text-light-gray/70 mt-1">
+                  Welcome back, {user.name || 'Policy Maker'} {user.avatar}
+                </p>
+              )}
             </div>
             
             <div className="flex items-center gap-4">
+              {/* User Profile */}
+              <div className="flex items-center gap-3 bg-dark-gunmetal/50 rounded-lg px-3 py-2">
+                <span className="text-2xl">{user?.avatar || '🏛️'}</span>
+                <div className="hidden md:block">
+                  <p className="text-sm font-medium text-pure-white">{user?.name || 'Policy Maker'}</p>
+                  <p className="text-xs text-light-gray/70">{user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1) || 'Policy Maker'}</p>
+                </div>
+                <button
+                  onClick={() => navigate('/')}
+                  className="text-light-gray hover:text-danger-red transition-colors text-sm"
+                  title="Logout"
+                >
+                  🚪
+                </button>
+              </div>
+              
               {/* Alert Indicator */}
               <div className="flex items-center gap-2 bg-danger-red/20 text-danger-red px-3 py-2 rounded-lg">
                 <AlertTriangle size={16} />

@@ -59,6 +59,7 @@ module.exports = {
   			'warning-orange': '#F2994A',
   			'danger-red': '#EB5757',
   			'dark-charcoal': '#1C1C1C',
+  			'dark-gunmetal': '#2C2C2C',
   			'light-gray': '#F2F2F2',
   			'pure-white': '#FFFFFF',
   			'aqua-teal': '#00C9A7',
@@ -81,11 +82,40 @@ module.exports = {
   				to: {
   					height: '0'
   				}
+  			},
+  			'tri-color-pulse': {
+  				'0%, 100%': {
+  					'border-color': '#FF9933'
+  				},
+  				'33%': {
+  					'border-color': '#FFFFFF'
+  				},
+  				'66%': {
+  					'border-color': '#138808'
+  				}
+  			},
+  			'fade-in-up': {
+  				'0%': {
+  					opacity: '0',
+  					transform: 'translateY(20px)'
+  				},
+  				'100%': {
+  					opacity: '1',
+  					transform: 'translateY(0)'
+  				}
   			}
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+  			'tri-color-pulse': 'tri-color-pulse 3s ease-in-out infinite',
+  			'fade-in-up': 'fade-in-up 0.6s ease-out forwards'
+  		},
+  		boxShadow: {
+  			'glow-tricolor': '0 0 20px rgba(255, 153, 51, 0.3), 0 0 40px rgba(255, 255, 255, 0.1), 0 0 60px rgba(19, 136, 8, 0.1)',
+  			'glow-saffron': '0 0 20px rgba(255, 153, 51, 0.4), 0 0 40px rgba(255, 153, 51, 0.2)',
+  			'glow-green': '0 0 20px rgba(19, 136, 8, 0.4), 0 0 40px rgba(19, 136, 8, 0.2)',
+  			'glow-white': '0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.1)'
   		}
   	}
   },

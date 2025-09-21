@@ -23,26 +23,37 @@ const SignupModal = ({ isOpen, onClose, onSignup }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[100]">
+    <div className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100]">
       <div className="min-h-screen w-full flex items-center justify-center p-4">
-        <div className="relative bg-dark-charcoal w-full max-w-md rounded-2xl shadow-2xl border border-saffron/20 overflow-hidden transform transition-all">
-          {/* Header with tri-color gradient */}
-          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-saffron via-pure-white to-india-green" />
+        <div className="relative bg-gradient-to-br from-dark-charcoal via-dark-charcoal to-dark-gunmetal w-full max-w-md rounded-3xl shadow-2xl border border-india-green/30 overflow-hidden transform transition-all hover:scale-[1.02] duration-300">
+          {/* Animated tri-color gradient border */}
+          <div className="absolute inset-0 rounded-3xl p-[2px] bg-gradient-to-r from-india-green via-pure-white to-saffron animate-pulse">
+            <div className="h-full w-full rounded-3xl bg-gradient-to-br from-dark-charcoal via-dark-charcoal to-dark-gunmetal" />
+          </div>
           
-          <div className="p-6 pt-8">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-pure-white">Create Account</h2>
+          {/* Header with tri-color gradient */}
+          <div className="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-india-green via-pure-white to-saffron rounded-t-3xl" />
+          
+          {/* Indian flag inspired decoration */}
+          <div className="absolute top-6 left-6 right-6 h-1 bg-gradient-to-r from-india-green/20 via-pure-white/20 to-saffron/20 rounded-full" />
+          
+          <div className="relative z-10 p-8 pt-12">
+            <div className="flex justify-between items-center mb-8">
+              <div className="text-center flex-1">
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-india-green via-pure-white to-saffron bg-clip-text text-transparent mb-2">Create Account</h2>
+                <p className="text-light-gray/80 text-sm">Join the DelhiAir.AI community</p>
+              </div>
               <button
                 onClick={onClose}
-                className="text-light-gray hover:text-pure-white transition-colors"
+                className="absolute top-4 right-4 text-light-gray hover:text-pure-white transition-colors bg-dark-gunmetal/50 hover:bg-dark-gunmetal rounded-full p-2"
               >
-                <X size={24} />
+                <X size={20} />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-light-gray mb-2">
+            <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="group">
+              <label htmlFor="name" className="block text-sm font-semibold text-light-gray mb-3 group-focus-within:text-saffron transition-colors">
                 Full Name
               </label>
               <input
@@ -51,13 +62,13 @@ const SignupModal = ({ isOpen, onClose, onSignup }) => {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-2 bg-dark-gunmetal rounded-lg border border-saffron/20 text-pure-white focus:outline-none focus:ring-2 focus:ring-saffron/50 transition-all"
+                className="w-full px-5 py-3 bg-dark-gunmetal/50 backdrop-blur-sm rounded-xl border border-saffron/30 text-pure-white focus:outline-none focus:ring-2 focus:ring-saffron/70 focus:border-saffron transition-all duration-300 placeholder:text-light-gray/50 hover:border-saffron/50"
                 placeholder="Enter your full name"
               />
             </div>
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-light-gray mb-2">
+            <div className="group">
+              <label htmlFor="email" className="block text-sm font-semibold text-light-gray mb-3 group-focus-within:text-pure-white transition-colors">
                 Email Address
               </label>
               <input
@@ -66,13 +77,13 @@ const SignupModal = ({ isOpen, onClose, onSignup }) => {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-2 bg-dark-gunmetal rounded-lg border border-saffron/20 text-pure-white focus:outline-none focus:ring-2 focus:ring-saffron/50 transition-all"
-                placeholder="Enter your email"
+                className="w-full px-5 py-3 bg-dark-gunmetal/50 backdrop-blur-sm rounded-xl border border-pure-white/30 text-pure-white focus:outline-none focus:ring-2 focus:ring-pure-white/70 focus:border-pure-white transition-all duration-300 placeholder:text-light-gray/50 hover:border-pure-white/50"
+                placeholder="Enter your email address"
               />
             </div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-light-gray mb-2">
+            <div className="group">
+              <label htmlFor="password" className="block text-sm font-semibold text-light-gray mb-3 group-focus-within:text-india-green transition-colors">
                 Password
               </label>
               <input
@@ -81,13 +92,13 @@ const SignupModal = ({ isOpen, onClose, onSignup }) => {
                 required
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="w-full px-4 py-2 bg-dark-gunmetal rounded-lg border border-saffron/20 text-pure-white focus:outline-none focus:ring-2 focus:ring-saffron/50 transition-all"
-                placeholder="Create a password"
+                className="w-full px-5 py-3 bg-dark-gunmetal/50 backdrop-blur-sm rounded-xl border border-india-green/30 text-pure-white focus:outline-none focus:ring-2 focus:ring-india-green/70 focus:border-india-green transition-all duration-300 placeholder:text-light-gray/50 hover:border-india-green/50"
+                placeholder="Create a strong password"
               />
             </div>
 
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-light-gray mb-2">
+            <div className="group">
+              <label htmlFor="confirmPassword" className="block text-sm font-semibold text-light-gray mb-3 group-focus-within:text-india-green transition-colors">
                 Confirm Password
               </label>
               <input
@@ -96,43 +107,54 @@ const SignupModal = ({ isOpen, onClose, onSignup }) => {
                 required
                 value={formData.confirmPassword}
                 onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                className="w-full px-4 py-2 bg-dark-gunmetal rounded-lg border border-saffron/20 text-pure-white focus:outline-none focus:ring-2 focus:ring-saffron/50 transition-all"
+                className="w-full px-5 py-3 bg-dark-gunmetal/50 backdrop-blur-sm rounded-xl border border-india-green/30 text-pure-white focus:outline-none focus:ring-2 focus:ring-india-green/70 focus:border-india-green transition-all duration-300 placeholder:text-light-gray/50 hover:border-india-green/50"
                 placeholder="Confirm your password"
               />
             </div>
 
-            <div>
-              <label htmlFor="role" className="block text-sm font-medium text-light-gray mb-2">
+            <div className="group">
+              <label htmlFor="role" className="block text-sm font-semibold text-light-gray mb-3 group-focus-within:text-saffron transition-colors">
                 Register As
               </label>
               <select
                 id="role"
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full px-4 py-2 bg-dark-gunmetal rounded-lg border border-saffron/20 text-pure-white focus:outline-none focus:ring-2 focus:ring-saffron/50 transition-all"
+                className="w-full px-5 py-3 bg-dark-gunmetal/50 backdrop-blur-sm rounded-xl border border-saffron/30 text-pure-white focus:outline-none focus:ring-2 focus:ring-saffron/70 focus:border-saffron transition-all duration-300 hover:border-saffron/50"
               >
-                <option value="citizen">Citizen</option>
-                <option value="policymaker">Policy Maker</option>
-                <option value="researcher">Researcher</option>
-                <option value="ngo">NGO</option>
+                <option value="citizen" className="bg-dark-gunmetal">🏛️ Citizen</option>
+                <option value="policymaker" className="bg-dark-gunmetal">📋 Policy Maker</option>
+                <option value="researcher" className="bg-dark-gunmetal">🔬 Researcher</option>
+                <option value="ngo" className="bg-dark-gunmetal">🤝 NGO</option>
               </select>
             </div>
 
-            <div className="text-sm text-light-gray">
-              <label className="flex items-center">
-                <input type="checkbox" required className="mr-2" />
-                I agree to the Terms of Service and Privacy Policy
+            <div className="bg-dark-gunmetal/30 rounded-xl p-4 border border-pure-white/20">
+              <label className="flex items-start text-sm text-light-gray hover:text-pure-white transition-colors cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  required 
+                  className="mr-3 w-4 h-4 mt-0.5 rounded border border-india-green/50 bg-dark-gunmetal/50 text-india-green focus:ring-india-green/30" 
+                />
+                <span>I agree to the <span className="text-saffron hover:text-pure-white transition-colors">Terms of Service</span> and <span className="text-india-green hover:text-pure-white transition-colors">Privacy Policy</span></span>
               </label>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-saffron via-pure-white to-india-green p-0.5 rounded-full font-bold text-lg hover:shadow-glow-tricolor transition-all duration-300"
+              className="w-full bg-gradient-to-r from-india-green via-pure-white to-saffron p-[2px] rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-india-green/20 group"
             >
-              <span className="block bg-dark-charcoal text-pure-white py-2 px-6 rounded-full hover:bg-dark-gunmetal transition-colors">
-                Create Account
+              <span className="flex items-center justify-center bg-gradient-to-r from-dark-charcoal via-dark-gunmetal to-dark-charcoal text-pure-white py-4 px-8 rounded-2xl group-hover:from-dark-gunmetal group-hover:via-dark-charcoal group-hover:to-dark-gunmetal transition-all duration-300">
+                <span className="bg-gradient-to-r from-india-green via-pure-white to-saffron bg-clip-text text-transparent font-bold text-lg">
+                  Create Your Account
+                </span>
               </span>
             </button>
+            
+            {/* Decorative tri-color line */}
+            <div className="flex items-center justify-center pt-4">
+              <div className="h-0.5 w-16 bg-gradient-to-r from-india-green via-pure-white to-saffron rounded-full opacity-60" />
+            </div>
             </form>
           </div>
         </div>
