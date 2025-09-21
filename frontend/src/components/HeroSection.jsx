@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { MapPin, BarChart3 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const PollutionParticles = () => {
   const canvasRef = useRef(null);
@@ -113,6 +114,7 @@ const PollutionParticles = () => {
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   
   const scrollToAQI = () => {
     const element = document.getElementById("aqi-snapshot");
@@ -121,8 +123,50 @@ const HeroSection = () => {
     }
   };
 
-  const goToPolicyDashboard = () => {
-    navigate("/dashboards/policy");
+  const goToDashboard = () => {
+    if (user) {
+      // Route to appropriate dashboard based on user role
+      switch (user.role) {
+        case 'policymaker':
+          navigate('/dashboards/policy');
+          break;
+        case 'researcher':
+          navigate('/dashboards/research');
+          break;
+        case 'ngo':
+          navigate('/dashboards/ngo');
+          break;
+        case 'citizen':
+          navigate('/dashboards/citizen');
+          break;
+        default:
+          navigate('/dashboards/citizen');
+      }
+    } else {
+      // User not logged in - scroll to login section or show login modal
+      // For now, let's scroll to the header where login button is
+      const headerElement = document.querySelector('header');
+      if (headerElement) {
+        headerElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  const getDashboardButtonText = () => {
+    if (!user) return "Login to View Dashboard";
+    
+    switch (user.role) {
+      case 'policymaker':
+        return "Policy Dashboard";
+      case 'researcher':
+        return "Research Dashboard";
+      case 'ngo':
+        return "NGO Dashboard";
+      case 'citizen':
+        return "Citizen Dashboard";
+      default:
+        return "Dashboard";
+    }
   };
 
   return (
@@ -173,11 +217,14 @@ const HeroSection = () => {
           </button>
           
           <button
-            onClick={goToPolicyDashboard}
-            className="bg-gradient-to-r from-india-green to-fresh-green text-white font-bold py-4 px-8 rounded-full text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 w-full sm:w-auto flex items-center justify-center gap-3 hover:from-fresh-green hover:to-india-green"
+            onClick={goToDashboard}
+            className={`${user 
+              ? 'bg-gradient-to-r from-india-green to-fresh-green hover:from-fresh-green hover:to-india-green' 
+              : 'bg-gradient-to-r from-saffron to-warning-orange hover:from-warning-orange hover:to-saffron'
+            } text-white font-bold py-4 px-8 rounded-full text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 w-full sm:w-auto flex items-center justify-center gap-3`}
           >
             <BarChart3 size={24} />
-            Show Dashboard
+            {getDashboardButtonText()}
           </button>
         </div>
       </div>
