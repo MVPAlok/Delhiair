@@ -39,68 +39,74 @@ const CitizenDashboard = () => {
 
       {/* Header */}
       <header className="bg-dark-charcoal text-pure-white shadow-xl border-b-2 border-aqua-teal">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => navigate("/")}
-                className="flex items-center gap-2 hover:text-aqua-teal transition-colors duration-300"
-              >
-                <ArrowLeft size={20} />
-                <span className="hidden md:inline">Back to Home</span>
-              </button>
-              <div className="h-6 w-px bg-light-gray/30"></div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-aqua-teal via-pure-white to-fresh-green bg-clip-text text-transparent">
-                🏛️ Citizen Dashboard
-              </h1>
+        <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
+              <div className="flex items-center gap-2 sm:gap-4">
+                <button
+                  onClick={() => navigate("/")}
+                  className="flex items-center gap-2 hover:text-aqua-teal transition-colors duration-300"
+                >
+                  <ArrowLeft size={20} />
+                  <span className="hidden sm:inline">Back to Home</span>
+                </button>
+                <div className="hidden sm:block h-6 w-px bg-light-gray/30"></div>
+                <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-aqua-teal via-pure-white to-fresh-green bg-clip-text text-transparent">
+                  🏛️ Citizen Dashboard
+                </h1>
+              </div>
               {user && (
-                <p className="text-sm text-light-gray/70 mt-1">
+                <p className="text-xs sm:text-sm text-light-gray/70 sm:mt-1">
                   Welcome back, {user.name || 'Citizen'} {user.avatar}
                 </p>
               )}
             </div>
             
-            <div className="flex items-center gap-4">
+            {/* Right section */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
               {/* User Profile */}
               <div className="flex items-center gap-3 bg-dark-gunmetal/50 rounded-lg px-3 py-2">
-                <span className="text-2xl">{user?.avatar || '🏛️'}</span>
-                <div className="hidden md:block">
+                <span className="text-xl sm:text-2xl">{user?.avatar || '🏛️'}</span>
+                <div className="flex-1 sm:hidden md:block">
                   <p className="text-sm font-medium text-pure-white">{user?.name || 'Citizen'}</p>
                   <p className="text-xs text-light-gray/70">{user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1) || 'Citizen'}</p>
                 </div>
                 <button
                   onClick={() => navigate('/')}
-                  className="text-light-gray hover:text-danger-red transition-colors text-sm"
+                  className="text-light-gray hover:text-danger-red transition-colors text-sm ml-auto sm:ml-0"
                   title="Logout"
                 >
                   🚪
                 </button>
               </div>
               
-              {/* Location Indicator */}
-              <div className="flex items-center gap-2 bg-aqua-teal/20 text-aqua-teal px-3 py-2 rounded-lg">
-                <MapPin size={16} />
-                <span className="text-sm font-medium">Delhi, India</span>
-              </div>
-              
-              {/* Action Buttons */}
-              <div className="flex gap-2">
-                <button className="flex items-center gap-2 bg-danger-red hover:bg-danger-red/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
-                  <Bell size={16} />
-                  <span className="hidden md:inline">Alerts</span>
-                </button>
-                <button className="flex items-center gap-2 bg-aqua-teal hover:bg-aqua-teal/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
-                  <Share2 size={16} />
-                  <span className="hidden md:inline">Share</span>
-                </button>
+              {/* Location and Action buttons - responsive layout */}
+              <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 w-full sm:w-auto">
+                {/* Location Indicator */}
+                <div className="flex items-center gap-2 bg-aqua-teal/20 text-aqua-teal px-2 sm:px-3 py-2 rounded-lg flex-1 sm:flex-none min-w-0">
+                  <MapPin size={14} className="sm:w-4 sm:h-4" />
+                  <span className="text-xs sm:text-sm font-medium">Delhi, India</span>
+                </div>
+                
+                {/* Action Buttons */}
+                <div className="flex gap-1 sm:gap-2">
+                  <button className="flex items-center gap-1 sm:gap-2 bg-danger-red hover:bg-danger-red/80 text-white px-2 sm:px-4 py-2 rounded-lg transition-colors duration-300 text-xs sm:text-sm">
+                    <Bell size={14} className="sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline">Alerts</span>
+                  </button>
+                  <button className="flex items-center gap-1 sm:gap-2 bg-aqua-teal hover:bg-aqua-teal/80 text-white px-2 sm:px-4 py-2 rounded-lg transition-colors duration-300 text-xs sm:text-sm">
+                    <Share2 size={14} className="sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline">Share</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-6 relative">
-        <div className="grid grid-cols-12 gap-6 h-full">
+      <div className="container mx-auto px-4 sm:px-6 py-6 relative">
+        <div className="grid grid-cols-12 gap-4 sm:gap-6 h-full">
           {/* Current AQI Display - Enhanced with glassmorphism */}
           <div className="col-span-12">
             <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-8 border border-white/30 hover:shadow-3xl transition-all duration-500 relative overflow-hidden">

@@ -84,68 +84,75 @@ const ResearchDashboard = () => {
       </div>
       {/* Header */}
       <header className="bg-dark-charcoal text-pure-white shadow-xl border-b-2 border-tech-blue">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => navigate("/")}
-                className="flex items-center gap-2 hover:text-aqua-teal transition-colors duration-300"
-              >
-                <ArrowLeft size={20} />
-                <span className="hidden md:inline">Back to Home</span>
-              </button>
-              <div className="h-6 w-px bg-light-gray/30"></div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-tech-blue via-pure-white to-aqua-teal bg-clip-text text-transparent">
-                🔬 Research Dashboard
-              </h1>
+        <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+            {/* Left section */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
+              <div className="flex items-center gap-2 sm:gap-4">
+                <button
+                  onClick={() => navigate("/")}
+                  className="flex items-center gap-2 hover:text-aqua-teal transition-colors duration-300"
+                >
+                  <ArrowLeft size={20} />
+                  <span className="hidden sm:inline">Back to Home</span>
+                </button>
+                <div className="hidden sm:block h-6 w-px bg-light-gray/30"></div>
+                <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-tech-blue via-pure-white to-aqua-teal bg-clip-text text-transparent">
+                  🔬 Research Dashboard
+                </h1>
+              </div>
               {user && (
-                <p className="text-sm text-light-gray/70 mt-1">
+                <p className="text-xs sm:text-sm text-light-gray/70 sm:mt-1">
                   Welcome back, {user.name || 'Researcher'} {user.avatar}
                 </p>
               )}
             </div>
             
-            <div className="flex items-center gap-4">
+            {/* Right section */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
               {/* User Profile */}
               <div className="flex items-center gap-3 bg-dark-gunmetal/50 rounded-lg px-3 py-2">
-                <span className="text-2xl">{user?.avatar || '🔬'}</span>
-                <div className="hidden md:block">
+                <span className="text-xl sm:text-2xl">{user?.avatar || '🔬'}</span>
+                <div className="flex-1 sm:hidden md:block">
                   <p className="text-sm font-medium text-pure-white">{user?.name || 'Researcher'}</p>
                   <p className="text-xs text-light-gray/70">{user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1) || 'Researcher'}</p>
                 </div>
                 <button
                   onClick={() => navigate('/')}
-                  className="text-light-gray hover:text-danger-red transition-colors text-sm"
+                  className="text-light-gray hover:text-danger-red transition-colors text-sm ml-auto sm:ml-0"
                   title="Logout"
                 >
                   🚪
                 </button>
               </div>
               
-              {/* Model Status */}
-              <div className="flex items-center gap-2 bg-tech-blue/20 text-tech-blue px-3 py-2 rounded-lg">
-                <Brain size={16} />
-                <span className="text-sm font-medium">{activeModels} Active Models</span>
-              </div>
-              
-              {/* Export Options */}
-              <div className="flex gap-2">
-                <button className="flex items-center gap-2 bg-tech-blue hover:bg-tech-blue/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
-                  <Download size={16} />
-                  <span className="hidden md:inline">Export</span>
-                </button>
-                <button className="flex items-center gap-2 bg-aqua-teal hover:bg-aqua-teal/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
-                  <Share2 size={16} />
-                  <span className="hidden md:inline">Share</span>
-                </button>
+              {/* Model and Action buttons - responsive layout */}
+              <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 w-full sm:w-auto">
+                {/* Model Status */}
+                <div className="flex items-center gap-2 bg-tech-blue/20 text-tech-blue px-2 sm:px-3 py-2 rounded-lg flex-1 sm:flex-none min-w-0">
+                  <Brain size={14} className="sm:w-4 sm:h-4" />
+                  <span className="text-xs sm:text-sm font-medium truncate">{activeModels} Active Models</span>
+                </div>
+                
+                {/* Action Buttons */}
+                <div className="flex gap-1 sm:gap-2">
+                  <button className="flex items-center gap-1 sm:gap-2 bg-tech-blue hover:bg-tech-blue/80 text-white px-2 sm:px-4 py-2 rounded-lg transition-colors duration-300 text-xs sm:text-sm">
+                    <Download size={14} className="sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline">Export</span>
+                  </button>
+                  <button className="flex items-center gap-1 sm:gap-2 bg-aqua-teal hover:bg-aqua-teal/80 text-white px-2 sm:px-4 py-2 rounded-lg transition-colors duration-300 text-xs sm:text-sm">
+                    <Share2 size={14} className="sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline">Share</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-6 relative">
-        <div className="grid grid-cols-12 gap-6 h-full">
+      <div className="container mx-auto px-4 sm:px-6 py-6 relative">
+        <div className="grid grid-cols-12 gap-4 sm:gap-6 h-full">
           {/* Left Sidebar - Filters & Controls */}
           <div className="col-span-12 lg:col-span-3 space-y-6">
             <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
