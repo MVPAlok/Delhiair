@@ -239,10 +239,18 @@ const Header = () => {
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
+        onSwitchToSignup={() => {
+          setIsLoginModalOpen(false);
+          setIsSignupModalOpen(true);
+        }}
       />
       <SignupModal
         isOpen={isSignupModalOpen}
         onClose={() => setIsSignupModalOpen(false)}
+        onSwitchToLogin={() => {
+          setIsSignupModalOpen(false);
+          setIsLoginModalOpen(true);
+        }}
       />
     </header>
   );

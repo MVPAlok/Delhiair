@@ -115,7 +115,16 @@ module.exports = {
   			'glow-tricolor': '0 0 20px rgba(255, 153, 51, 0.3), 0 0 40px rgba(255, 255, 255, 0.1), 0 0 60px rgba(19, 136, 8, 0.1)',
   			'glow-saffron': '0 0 20px rgba(255, 153, 51, 0.4), 0 0 40px rgba(255, 153, 51, 0.2)',
   			'glow-green': '0 0 20px rgba(19, 136, 8, 0.4), 0 0 40px rgba(19, 136, 8, 0.2)',
-  			'glow-white': '0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.1)'
+  			'glow-white': '0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.1)',
+  			'3xl': '0 35px 60px -12px rgba(0, 0, 0, 0.25)'
+  		},
+  		backdropBlur: {
+  			'3xl': '64px',
+  			'4xl': '128px'
+  		},
+  		backdropSaturate: {
+  			'150': '1.5',
+  			'200': '2'
   		}
   	}
   },

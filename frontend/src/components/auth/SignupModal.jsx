@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 
-const SignupModal = ({ isOpen, onClose, onSignup }) => {
+const SignupModal = ({ isOpen, onClose, onSignup, onSwitchToLogin }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,9 +23,20 @@ const SignupModal = ({ isOpen, onClose, onSignup }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100]">
-      <div className="min-h-screen w-full flex items-center justify-center p-4">
-        <div className="relative bg-gradient-to-br from-dark-charcoal via-dark-charcoal to-dark-gunmetal w-full max-w-md rounded-3xl shadow-2xl border border-india-green/30 overflow-hidden transform transition-all hover:scale-[1.02] duration-300">
+    <div className="fixed inset-0 z-[100]">
+      {/* Enhanced Background Blur Layer */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-dark-charcoal/80 to-black/60 backdrop-blur-3xl backdrop-saturate-150 animate-backdrop-fade-in" />
+      
+      {/* Animated Particle Effect */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-1/4 right-1/4 w-2 h-2 bg-india-green/40 rounded-full animate-particle-float" />
+        <div className="absolute top-1/3 left-1/3 w-1 h-1 bg-saffron/40 rounded-full animate-particle-float animation-delay-300" />
+        <div className="absolute bottom-1/4 right-1/3 w-1.5 h-1.5 bg-pure-white/40 rounded-full animate-particle-float animation-delay-600" />
+        <div className="absolute top-2/3 left-1/4 w-1 h-1 bg-india-green/40 rounded-full animate-particle-float animation-delay-900" />
+        <div className="absolute top-1/2 right-1/2 w-1 h-1 bg-saffron/30 rounded-full animate-particle-float animation-delay-1200" />
+      </div>
+      <div className="relative min-h-screen w-full flex items-center justify-center p-4">
+        <div className="relative bg-gradient-to-br from-dark-charcoal via-dark-charcoal to-dark-gunmetal w-full max-w-md rounded-3xl shadow-2xl border border-india-green/30 overflow-hidden animate-modal-slide-in hover:scale-[1.02] transition-transform duration-300 hover:shadow-3xl hover:shadow-india-green/20">
           {/* Animated tri-color gradient border */}
           <div className="absolute inset-0 rounded-3xl p-[2px] bg-gradient-to-r from-india-green via-pure-white to-saffron animate-pulse">
             <div className="h-full w-full rounded-3xl bg-gradient-to-br from-dark-charcoal via-dark-charcoal to-dark-gunmetal" />
@@ -154,6 +165,20 @@ const SignupModal = ({ isOpen, onClose, onSignup }) => {
             {/* Decorative tri-color line */}
             <div className="flex items-center justify-center pt-4">
               <div className="h-0.5 w-16 bg-gradient-to-r from-india-green via-pure-white to-saffron rounded-full opacity-60" />
+            </div>
+            
+            {/* Login option */}
+            <div className="text-center pt-4">
+              <p className="text-light-gray/70 text-sm">
+                Already have an account?{' '}
+                <button
+                  type="button"
+                  onClick={onSwitchToLogin}
+                  className="text-aqua-teal hover:text-india-green transition-colors duration-300 font-semibold underline"
+                >
+                  Sign in here
+                </button>
+              </p>
             </div>
             </form>
           </div>
