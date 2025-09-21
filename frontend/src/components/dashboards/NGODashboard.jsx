@@ -19,9 +19,17 @@ import {
   Brain,
   Map,
   Camera,
+  CheckCircle,
+  XCircle,
   Send,
   Eye,
   BarChart3,
+  PieChart,
+  Satellite,
+  Shield,
+  Bell,
+  Globe,
+  Database,
   Zap
 } from 'lucide-react';
 
@@ -31,8 +39,9 @@ const NGODashboard = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState("30d");
   const [selectedRegion, setSelectedRegion] = useState("all");
   const [activeReports, setActiveReports] = useState(24);
-  const [showMapView, setShowMapView] = useState(false);
-  const [selectedTrendPeriod, setSelectedTrendPeriod] = useState("weekly");
+  const [mapView, setMapView] = useState(false);
+  const [citizenReports, setCitizenReports] = useState(8);
+  const [pendingValidation, setPendingValidation] = useState(5);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50">
@@ -43,7 +52,7 @@ const NGODashboard = () => {
       </div>
 
       {/* Header */}
-      <header className="bg-dark-charcoal text-pure-white shadow-xl border-b-2 border-india-green">
+      <header className="bg-dark-charcoal text-pure-white shadow-xl border-b-2 border-fresh-green">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -55,12 +64,12 @@ const NGODashboard = () => {
                 <span className="hidden md:inline">Back to Home</span>
               </button>
               <div className="h-6 w-px bg-light-gray/30"></div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-india-green via-pure-white to-saffron bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-fresh-green via-pure-white to-saffron bg-clip-text text-transparent">
                 🌱 NGO Dashboard
               </h1>
               {user && (
                 <p className="text-sm text-light-gray/70 mt-1">
-                  Welcome back, {user.name || 'NGO Representative'} {user.avatar}
+                  Welcome back, {user.name || 'NGO Representative'} {user.avatar || '🌱'}
                 </p>
               )}
             </div>
@@ -83,18 +92,18 @@ const NGODashboard = () => {
               </div>
               
               {/* Alert Indicator */}
-              <div className="flex items-center gap-2 bg-warning-orange/20 text-warning-orange px-3 py-2 rounded-lg">
+              <div className="flex items-center gap-2 bg-saffron/20 text-saffron px-3 py-2 rounded-lg">
                 <AlertTriangle size={16} />
                 <span className="text-sm font-medium">{activeReports} Active Reports</span>
               </div>
               
               {/* Export Options */}
               <div className="flex gap-2">
-                <button className="flex items-center gap-2 bg-tech-blue hover:bg-tech-blue/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
+                <button className="flex items-center gap-2 bg-fresh-green hover:bg-fresh-green/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
                   <Download size={16} />
                   <span className="hidden md:inline">Export</span>
                 </button>
-                <button className="flex items-center gap-2 bg-india-green hover:bg-india-green/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
+                <button className="flex items-center gap-2 bg-aqua-teal hover:bg-aqua-teal/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
                   <Share2 size={16} />
                   <span className="hidden md:inline">Share</span>
                 </button>
@@ -108,11 +117,11 @@ const NGODashboard = () => {
         <div className="grid grid-cols-12 gap-6 h-full">
           {/* Enhanced Left Sidebar */}
           <div className="col-span-12 lg:col-span-3 space-y-6">
-            {/* Main Filters Card */}
+            {/* NGO Filters Card */}
             <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
               <div className="flex items-center gap-2 mb-4">
-                <Filter size={20} className="text-tech-blue" />
-                <h3 className="font-bold text-slate-800">Filters</h3>
+                <Filter size={20} className="text-fresh-green" />
+                <h3 className="font-bold text-slate-800">NGO Filters</h3>
               </div>
               
               <div className="mb-4">
@@ -122,29 +131,30 @@ const NGODashboard = () => {
                 <select 
                   value={selectedTimeRange}
                   onChange={(e) => setSelectedTimeRange(e.target.value)}
-                  className="w-full p-2 border border-white/30 rounded-lg focus:ring-2 focus:ring-tech-blue focus:border-transparent bg-white/50 backdrop-blur-sm"
+                  className="w-full p-2 border border-white/30 rounded-lg focus:ring-2 focus:ring-fresh-green focus:border-transparent bg-white/50 backdrop-blur-sm"
                 >
                   <option value="7d">Last 7 Days</option>
                   <option value="30d">Last 30 Days</option>
                   <option value="90d">Last 90 Days</option>
+                  <option value="1y">Last Year</option>
                 </select>
               </div>
 
               <div className="mb-4">
                 <label className="block text-sm font-medium text-slate-800/80 mb-2">
-                  Region Filter
+                  Region Focus
                 </label>
                 <select 
                   value={selectedRegion}
                   onChange={(e) => setSelectedRegion(e.target.value)}
-                  className="w-full p-2 border border-white/30 rounded-lg focus:ring-2 focus:ring-tech-blue focus:border-transparent bg-white/50 backdrop-blur-sm"
+                  className="w-full p-2 border border-white/30 rounded-lg focus:ring-2 focus:ring-fresh-green focus:border-transparent bg-white/50 backdrop-blur-sm"
                 >
                   <option value="all">All Delhi-NCR</option>
+                  <option value="central">Central Delhi</option>
                   <option value="east">East Delhi</option>
                   <option value="west">West Delhi</option>
-                  <option value="north">North Delhi</option>
                   <option value="south">South Delhi</option>
-                  <option value="central">Central Delhi</option>
+                  <option value="north">North Delhi</option>
                   <option value="gurgaon">Gurgaon</option>
                   <option value="noida">Noida</option>
                 </select>
@@ -160,45 +170,50 @@ const NGODashboard = () => {
                   <span className="font-bold text-fresh-green">92.3%</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-700">Live AQI</span>
-                  <span className="font-bold text-warning-orange">156</span>
+                  <span className="text-sm text-slate-700">Pending Reviews</span>
+                  <span className="font-bold text-saffron">{pendingValidation}</span>
                 </div>
               </div>
             </div>
 
             {/* AI Insights Card */}
             <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
-              <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <Brain size={20} className="text-purple-600 animate-pulse" />
-                AI Insights
-              </h3>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="relative">
+                  <Brain size={20} className="text-purple-600" />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
+                </div>
+                <h3 className="font-bold text-slate-800">AI Insights</h3>
+              </div>
+              
               <div className="space-y-4">
-                <div className="bg-gradient-to-r from-purple-50 to-blue-50 p-4 rounded-xl border border-purple-200/50">
-                  <div className="flex items-start gap-3">
-                    <Zap size={16} className="text-purple-600 mt-1 animate-bounce" />
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800 mb-1">Top Issue This Month</p>
-                      <p className="text-xs text-slate-600">Industrial Emissions (45% of reports)</p>
-                    </div>
+                <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-xl border border-purple-200/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <PieChart size={16} className="text-purple-600" />
+                    <span className="text-sm font-semibold text-slate-800">Top Issue This Month</span>
                   </div>
+                  <p className="text-lg font-bold text-purple-600">Industrial Emissions</p>
+                  <p className="text-sm text-slate-600">45% of all reports</p>
                 </div>
+                
                 <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border border-green-200/50">
-                  <div className="flex items-start gap-3">
-                    <TrendingUp size={16} className="text-green-600 mt-1" />
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800 mb-1">Positive Trend</p>
-                      <p className="text-xs text-slate-600">Waste burning ↓20% after policy drive</p>
-                    </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <TrendingUp size={16} className="text-green-600" />
+                    <span className="text-sm font-semibold text-slate-800">Progress Update</span>
                   </div>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    "Waste burning decreased by 20% after last policy drive."
+                  </p>
                 </div>
-                <div className="bg-gradient-to-r from-orange-50 to-red-50 p-4 rounded-xl border border-orange-200/50">
-                  <div className="flex items-start gap-3">
-                    <AlertTriangle size={16} className="text-orange-600 mt-1" />
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800 mb-1">Alert Zone</p>
-                      <p className="text-xs text-slate-600">East Delhi: Dust incidents ↑30%</p>
-                    </div>
+                
+                <div className="bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-xl border border-yellow-200/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <BarChart3 size={16} className="text-orange-600" />
+                    <span className="text-sm font-semibold text-slate-800">Regional Alert</span>
                   </div>
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    "Dust incidents increased by 30% in East Delhi compared to last month."
+                  </p>
                 </div>
               </div>
             </div>
@@ -210,26 +225,26 @@ const NGODashboard = () => {
                 Quick Actions
               </h3>
               <div className="space-y-3">
+                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/50 backdrop-blur-sm transition-colors duration-300 text-sm flex items-center gap-2">
+                  <FileText size={16} />
+                  📝 Submit Report
+                </button>
+                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/50 backdrop-blur-sm transition-colors duration-300 text-sm flex items-center gap-2">
+                  <Users size={16} />
+                  👥 Assign Volunteer
+                </button>
+                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/50 backdrop-blur-sm transition-colors duration-300 text-sm flex items-center gap-2">
+                  <BarChart3 size={16} />
+                  📊 Schedule Survey
+                </button>
                 <button 
-                  onClick={() => setShowMapView(!showMapView)}
-                  className={`w-full text-left px-3 py-2 rounded-lg transition-colors duration-300 text-sm flex items-center gap-2 ${
-                    showMapView ? 'bg-tech-blue/20 text-tech-blue' : 'hover:bg-white/50 backdrop-blur-sm'
+                  onClick={() => setMapView(!mapView)}
+                  className={`w-full text-left px-3 py-2 rounded-lg hover:bg-white/50 backdrop-blur-sm transition-colors duration-300 text-sm flex items-center gap-2 ${
+                    mapView ? 'bg-fresh-green/20 text-fresh-green border border-fresh-green/30' : ''
                   }`}
                 >
                   <Map size={16} />
-                  📍 Geo-Tagged Map View
-                </button>
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/50 backdrop-blur-sm transition-colors duration-300 text-sm flex items-center gap-2">
-                  <Camera size={16} />
-                  📸 Citizen Reports
-                </button>
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/50 backdrop-blur-sm transition-colors duration-300 text-sm flex items-center gap-2">
-                  <Send size={16} />
-                  📤 Escalate to Policy
-                </button>
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/50 backdrop-blur-sm transition-colors duration-300 text-sm flex items-center gap-2">
-                  <Eye size={16} />
-                  👁️ Validate Reports
+                  🗺️ {mapView ? 'Hide' : 'Show'} Geo Map
                 </button>
               </div>
             </div>
@@ -237,281 +252,280 @@ const NGODashboard = () => {
 
           {/* Enhanced Main Content Area */}
           <div className="col-span-12 lg:col-span-9 space-y-6">
-            {/* Geo-Tagged Map or Trend View Toggle */}
-            {showMapView ? (
+            
+            {/* Geo-Tagged Map View */}
+            {mapView && (
               <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-6">
                   <h3 className="font-bold text-slate-800 flex items-center gap-2">
-                    <Map size={20} className="text-tech-blue" />
+                    <MapPin size={20} className="text-red-600" />
                     Geo-Tagged Incident Map - Delhi NCR
                   </h3>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm text-slate-700">Live Hotspots</span>
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm text-slate-600">Region: {selectedRegion === 'all' ? 'All Delhi-NCR' : selectedRegion.charAt(0).toUpperCase() + selectedRegion.slice(1)}</span>
+                    <button 
+                      onClick={() => setMapView(false)}
+                      className="text-sm text-red-600 hover:underline"
+                    >
+                      ✕ Close Map
+                    </button>
                   </div>
                 </div>
-                <div className="h-80 flex items-center justify-center border-2 border-dashed border-blue-300/50 rounded-2xl bg-gradient-to-br from-blue-50/50 to-cyan-50/50 backdrop-blur-sm relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/5 via-transparent to-cyan-400/5 animate-pulse"></div>
+                <div className="h-96 flex items-center justify-center border-2 border-dashed border-red-300/50 rounded-2xl bg-gradient-to-br from-red-50/50 to-orange-50/50 backdrop-blur-sm relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-400/5 via-transparent to-orange-400/5 animate-pulse"></div>
                   <div className="text-center text-slate-700 relative z-10">
-                    <MapPin size={64} className="mx-auto mb-4 text-tech-blue/60 animate-bounce" />
-                    <p className="font-semibold text-lg mb-2">Interactive Delhi-NCR Map</p>
-                    <p className="text-sm text-slate-600 mb-4">📍 Pinned incidents • 🔥 Hotspot analysis • 📊 Data layers</p>
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs">🔴 Critical: 8 incidents</span>
-                      <span className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs">🟡 Moderate: 15 incidents</span>
-                      <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">🟢 Resolved: 12 incidents</span>
+                    <Map size={64} className="mx-auto mb-4 text-red-600/60 animate-bounce" />
+                    <p className="font-semibold text-lg mb-2">Interactive Delhi-NCR Pollution Map</p>
+                    <p className="text-sm text-slate-600 mb-4">Visualize incident hotspots and share with authorities</p>
+                    <div className="flex justify-center gap-4 text-sm">
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <span>Critical (12 pins)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                        <span>Moderate (8 pins)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                        <span>Resolved (15 pins)</span>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-bold text-slate-800 flex items-center gap-2">
-                    <BarChart3 size={20} className="text-tech-blue" />
-                    Pollution Trends Analysis
-                  </h3>
-                  <select 
-                    value={selectedTrendPeriod}
-                    onChange={(e) => setSelectedTrendPeriod(e.target.value)}
-                    className="bg-white/50 backdrop-blur-sm border border-white/30 rounded-lg px-3 py-1 text-sm"
-                  >
-                    <option value="weekly">Weekly Trends</option>
-                    <option value="monthly">Monthly Trends</option>
-                    <option value="quarterly">Quarterly Trends</option>
-                  </select>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                  <div className="bg-gradient-to-r from-red-50 to-orange-50 p-4 rounded-xl border border-red-200/50">
-                    <div className="flex items-center gap-3 mb-2">
-                      <TrendingUp size={20} className="text-red-600" />
-                      <span className="font-semibold text-slate-800">Industrial Emissions</span>
-                    </div>
-                    <p className="text-2xl font-bold text-red-600">↑30%</p>
-                    <p className="text-sm text-slate-600">vs last month in East Delhi</p>
-                  </div>
-                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border border-green-200/50">
-                    <div className="flex items-center gap-3 mb-2">
-                      <TrendingUp size={20} className="text-green-600 rotate-180" />
-                      <span className="font-semibold text-slate-800">Waste Burning</span>
-                    </div>
-                    <p className="text-2xl font-bold text-green-600">↓20%</p>
-                    <p className="text-sm text-slate-600">After policy intervention</p>
-                  </div>
-                  <div className="bg-gradient-to-r from-yellow-50 to-amber-50 p-4 rounded-xl border border-yellow-200/50">
-                    <div className="flex items-center gap-3 mb-2">
-                      <Activity size={20} className="text-yellow-600" />
-                      <span className="font-semibold text-slate-800">Construction Dust</span>
-                    </div>
-                    <p className="text-2xl font-bold text-yellow-600">~15%</p>
-                    <p className="text-sm text-slate-600">Steady across regions</p>
-                  </div>
-                </div>
-                <div className="h-48 flex items-center justify-center border-2 border-dashed border-blue-300/50 rounded-2xl bg-gradient-to-br from-blue-50/50 to-cyan-50/50">
-                  <div className="text-center text-slate-700">
-                    <BarChart3 size={48} className="mx-auto mb-2 text-tech-blue/60" />
-                    <p className="font-medium">Trend Visualization Chart</p>
-                    <p className="text-sm text-slate-600">Weekly/Monthly pollution pattern analysis</p>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Citizen-NGO Connect Section */}
+            {/* Trend View for NGOs */}
             <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bold text-slate-800 flex items-center gap-2">
-                  <MessageSquare size={20} className="text-fresh-green" />
-                  Citizen Direct Reports
+                  <TrendingUp size={20} className="text-cyan-600" />
+                  Pollution Trends Analysis
                 </h3>
-                <div className="flex items-center gap-2">
-                  <span className="bg-fresh-green text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">
-                    7 New
-                  </span>
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <Clock size={16} />
+                  Updated hourly
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[
-                  {
-                    citizen: "Raj Kumar",
-                    location: "Lajpat Nagar",
-                    issue: "Heavy smoke from nearby factory",
-                    photo: "📸",
-                    time: "2 hours ago",
-                    status: "pending"
-                  },
-                  {
-                    citizen: "Priya Singh",
-                    location: "Dwarka Sector 10",
-                    issue: "Construction dust without barriers",
-                    photo: "📸",
-                    time: "4 hours ago",
-                    status: "validated"
-                  },
-                  {
-                    citizen: "Amit Sharma",
-                    location: "Karol Bagh",
-                    issue: "Waste burning in open area",
-                    photo: "📸",
-                    time: "6 hours ago",
-                    status: "escalated"
-                  },
-                  {
-                    citizen: "Sunita Devi",
-                    location: "Rohini Sector 15",
-                    issue: "Industrial chimney emitting black smoke",
-                    photo: "📸",
-                    time: "8 hours ago",
-                    status: "pending"
-                  }
-                ].map((report, i) => (
-                  <div key={i} className="p-4 rounded-xl hover:bg-white/50 backdrop-blur-sm transition-all duration-300 border border-white/30 shadow-lg hover:shadow-xl transform hover:scale-[1.02]">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl">👤</span>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  {[
+                    { issue: 'Dust Incidents', change: '+30%', region: 'East Delhi', trend: 'up', color: 'text-red-600', bgColor: 'bg-red-50' },
+                    { issue: 'Industrial Emissions', change: '+15%', region: 'Gurgaon', trend: 'up', color: 'text-orange-600', bgColor: 'bg-orange-50' },
+                    { issue: 'Waste Burning', change: '-20%', region: 'All NCR', trend: 'down', color: 'text-green-600', bgColor: 'bg-green-50' },
+                    { issue: 'Vehicle Pollution', change: '-5%', region: 'Central Delhi', trend: 'down', color: 'text-blue-600', bgColor: 'bg-blue-50' }
+                  ].map((trend, i) => (
+                    <div key={i} className={`p-4 rounded-xl border ${trend.bgColor} border-opacity-30`}>
+                      <div className="flex items-center justify-between">
                         <div>
-                          <h4 className="font-semibold text-slate-800">{report.citizen}</h4>
-                          <p className="text-sm text-slate-600 flex items-center gap-1">
-                            <MapPin size={12} />
-                            {report.location}
-                          </p>
+                          <h4 className="font-semibold text-slate-800">{trend.issue}</h4>
+                          <p className="text-sm text-slate-600">{trend.region}</p>
+                        </div>
+                        <div className="text-right">
+                          <span className={`text-lg font-bold ${trend.color}`}>
+                            {trend.change}
+                          </span>
+                          <p className="text-xs text-slate-500">vs last month</p>
                         </div>
                       </div>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        report.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
-                        report.status === 'validated' ? 'bg-blue-100 text-blue-700' :
-                        'bg-green-100 text-green-700'
-                      }`}>
-                        {report.status.charAt(0).toUpperCase() + report.status.slice(1)}
-                      </span>
                     </div>
-                    <p className="text-sm text-slate-700 mb-3">{report.issue}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-lg">{report.photo}</span>
-                        <span className="text-xs text-slate-600">{report.time}</span>
-                      </div>
-                      <div className="flex gap-1">
-                        {report.status === 'pending' && (
-                          <>
-                            <button className="px-3 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600 transition-colors">
-                              ✓ Validate
-                            </button>
-                            <button className="px-3 py-1 bg-green-500 text-white rounded text-xs hover:bg-green-600 transition-colors">
-                              📤 Escalate
-                            </button>
-                          </>
-                        )}
-                        {report.status === 'validated' && (
-                          <button className="px-3 py-1 bg-green-500 text-white rounded text-xs hover:bg-green-600 transition-colors">
-                            📤 Escalate
-                          </button>
-                        )}
-                        {report.status === 'escalated' && (
-                          <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded text-xs">
-                            ✅ Sent to Policy
-                          </span>
-                        )}
-                      </div>
-                    </div>
+                  ))}
+                </div>
+                <div className="h-64 flex items-center justify-center border-2 border-dashed border-cyan-300/50 rounded-2xl bg-gradient-to-br from-cyan-50/50 to-blue-50/50">
+                  <div className="text-center text-slate-700">
+                    <BarChart3 size={64} className="mx-auto mb-4 text-cyan-600/60" />
+                    <p className="font-semibold text-lg mb-2">Trend Visualization</p>
+                    <p className="text-sm text-slate-600">Monthly comparison charts</p>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
 
-            {/* Enhanced Recent Community Reports */}
+            {/* Citizen-NGO Connect */}
             <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bold text-slate-800 flex items-center gap-2">
-                  <FileText size={20} className="text-warning-orange" />
-                  Validated Community Reports
+                  <MessageSquare size={20} className="text-blue-600" />
+                  Citizen Direct Reports
                 </h3>
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2 text-sm text-slate-700">
-                    <div className="w-2 h-2 bg-aqua-teal rounded-full animate-pulse"></div>
-                    CPCB Integration Active
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-slate-600">{citizenReports} new reports</span>
+                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  {[
+                    {
+                      citizen: 'Rajesh Kumar',
+                      issue: 'Illegal waste burning near school',
+                      location: 'Lajpat Nagar',
+                      time: '2 hours ago',
+                      photos: 3,
+                      status: 'pending'
+                    },
+                    {
+                      citizen: 'Priya Sharma',
+                      issue: 'Construction dust without covering',
+                      location: 'Dwarka Sector 10',
+                      time: '4 hours ago',
+                      photos: 2,
+                      status: 'validated'
+                    },
+                    {
+                      citizen: 'Anonymous User',
+                      issue: 'Industrial smoke after midnight',
+                      location: 'Mayapuri',
+                      time: '1 day ago',
+                      photos: 1,
+                      status: 'escalated'
+                    }
+                  ].map((report, i) => (
+                    <div key={i} className="p-4 rounded-xl hover:bg-white/50 backdrop-blur-sm transition-all duration-300 border border-white/30 shadow-lg">
+                      <div className="flex justify-between items-start mb-3">
+                        <div>
+                          <h4 className="font-semibold text-slate-800 text-sm">{report.citizen}</h4>
+                          <p className="text-xs text-slate-600">{report.location} • {report.time}</p>
+                        </div>
+                        <span className={`text-xs px-2 py-1 rounded ${
+                          report.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
+                          report.status === 'validated' ? 'bg-green-100 text-green-700' :
+                          'bg-blue-100 text-blue-700'
+                        }`}>
+                          {report.status}
+                        </span>
+                      </div>
+                      <p className="text-sm text-slate-700 mb-3">{report.issue}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-slate-600 flex items-center gap-1">
+                          <Camera size={12} />
+                          {report.photos} photos attached
+                        </span>
+                        <div className="flex gap-2">
+                          {report.status === 'pending' && (
+                            <>
+                              <button className="text-xs px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors flex items-center gap-1">
+                                <CheckCircle size={12} /> Validate
+                              </button>
+                              <button className="text-xs px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors flex items-center gap-1">
+                                <XCircle size={12} /> Reject
+                              </button>
+                            </>
+                          )}
+                          {report.status === 'validated' && (
+                            <button className="text-xs px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors flex items-center gap-1">
+                              <Send size={12} /> Escalate
+                            </button>
+                          )}
+                          <button className="text-xs px-2 py-1 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors flex items-center gap-1">
+                            <Eye size={12} /> View
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="space-y-4">
+                  <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-xl border border-blue-200/50">
+                    <h4 className="font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                      <Users size={16} className="text-blue-600" />
+                      Validation Workflow
+                    </h4>
+                    <div className="space-y-2 text-sm text-slate-700">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                        <span>Pending Review: {pendingValidation} reports</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span>Validated: 15 reports this week</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <span>Escalated to Policy: 8 reports</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-sm text-slate-600">
-                    Live AQI: <span className="font-bold text-orange-600">156</span>
+                  <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-xl border border-purple-200/50">
+                    <h4 className="font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                      <Bell size={16} className="text-purple-600" />
+                      Quick Actions
+                    </h4>
+                    <div className="space-y-2">
+                      <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/50 text-sm flex items-center gap-2">
+                        <Shield size={14} />
+                        Bulk Validate Reports
+                      </button>
+                      <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/50 text-sm flex items-center gap-2">
+                        <Send size={14} />
+                        Send to Policymakers
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="space-y-4">
+            </div>
+
+            {/* CPCB Integration */}
+            <div className="bg-white/40 backdrop-blur-xl rounded-2xl shadow-2xl p-6 border border-white/30 hover:shadow-3xl transition-all duration-500">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="font-bold text-slate-800 flex items-center gap-2">
+                  <Database size={20} className="text-emerald-600" />
+                  CPCB Live Data Integration
+                </h3>
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <Satellite size={16} />
+                  Real-time verification layer
+                </div>
+              </div>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {[
-                  {
-                    title: "Industrial Emissions in East Delhi",
-                    status: "Critical",
-                    submissions: 34,
-                    date: "2 hours ago",
-                    verified: true,
-                    escalated: false,
-                    aqiImpact: "+15 AQI"
-                  },
-                  {
-                    title: "Construction Dust Control Measures",
-                    status: "Ongoing",
-                    submissions: 12,
-                    date: "5 hours ago",
-                    verified: true,
-                    escalated: true,
-                    aqiImpact: "+8 AQI"
-                  },
-                  {
-                    title: "Waste Burning Incidents",
-                    status: "Resolved",
-                    submissions: 8,
-                    date: "1 day ago",
-                    verified: true,
-                    escalated: true,
-                    aqiImpact: "-5 AQI"
-                  }
-                ].map((report, i) => (
-                  <div key={i} className="p-4 rounded-xl hover:bg-white/50 backdrop-blur-sm transition-all duration-300 border border-white/30 shadow-lg hover:shadow-xl transform hover:scale-[1.02]">
-                    <div className="flex justify-between items-start">
-                      <div className="space-y-2 flex-1">
-                        <div className="flex items-center gap-2">
-                          <h4 className="font-semibold text-slate-800">{report.title}</h4>
-                          {report.verified && (
-                            <span className="text-green-600" title="NGO Verified">
-                              ✅
-                            </span>
-                          )}
-                          {report.escalated && (
-                            <span className="text-blue-600" title="Escalated to Policy">
-                              📤
-                            </span>
-                          )}
-                        </div>
-                        <div className="flex items-center space-x-4 text-sm">
-                          <span className={`px-3 py-1 rounded-full font-medium ${
-                            report.status === 'Critical' ? 'bg-danger-red/20 text-danger-red border border-danger-red/30' :
-                            report.status === 'Ongoing' ? 'bg-warning-orange/20 text-warning-orange border border-warning-orange/30' :
-                            'bg-fresh-green/20 text-fresh-green border border-fresh-green/30'
-                          }`}>
-                            {report.status}
-                          </span>
-                          <span className="text-slate-700 flex items-center gap-1">
-                            <Users size={14} />
-                            {report.submissions} submissions
-                          </span>
-                          <span className={`text-xs px-2 py-1 rounded ${
-                            report.aqiImpact.startsWith('+') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
-                          }`}>
-                            {report.aqiImpact}
-                          </span>
-                        </div>
+                  { station: 'Anand Vihar', aqi: 342, status: 'Severe', trend: 'up', color: 'text-red-600' },
+                  { station: 'RK Puram', aqi: 198, status: 'Poor', trend: 'stable', color: 'text-orange-600' },
+                  { station: 'Dwarka', aqi: 156, status: 'Moderate', trend: 'down', color: 'text-yellow-600' }
+                ].map((station, i) => (
+                  <div key={i} className="bg-gradient-to-r from-emerald-50 to-green-50 p-4 rounded-xl border border-emerald-200/50">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-semibold text-slate-800">{station.station}</h4>
+                      <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded">CPCB</span>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-600">AQI Level</span>
+                        <span className={`text-lg font-bold ${station.color}`}>{station.aqi}</span>
                       </div>
-                      <div className="text-right">
-                        <span className="text-xs text-slate-600">{report.date}</span>
-                        {!report.escalated && report.verified && (
-                          <button className="block mt-2 px-3 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600 transition-colors">
-                            📤 Escalate
-                          </button>
-                        )}
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-600">Status</span>
+                        <span className={`text-sm font-medium ${station.color}`}>{station.status}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-600">Trend</span>
+                        <span className="text-sm">
+                          {station.trend === 'up' ? '📈' : station.trend === 'down' ? '📉' : '➡️'} {station.trend}
+                        </span>
                       </div>
                     </div>
                   </div>
                 ))}
+              </div>
+              <div className="mt-6 p-4 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl border border-cyan-200/50">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-semibold text-slate-800 mb-1">Data Verification Status</h4>
+                    <p className="text-sm text-slate-600">Cross-reference your reports with official CPCB readings</p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-center">
+                      <span className="text-lg font-bold text-green-600">92%</span>
+                      <p className="text-xs text-slate-600">Accuracy Match</p>
+                    </div>
+                    <button className="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors flex items-center gap-2">
+                      <Zap size={16} />
+                      Sync Reports
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
