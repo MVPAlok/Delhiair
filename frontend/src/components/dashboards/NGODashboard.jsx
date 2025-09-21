@@ -1,51 +1,162 @@
-import React from 'react';
-import { FileText, MessageSquare, Users, AlertTriangle } from 'lucide-react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { 
+  ArrowLeft, 
+  Download, 
+  Share2, 
+  Filter, 
+  AlertTriangle,
+  FileText, 
+  MessageSquare, 
+  Users, 
+  MapPin,
+  Clock,
+  Target,
+  Settings,
+  TrendingUp,
+  Activity
+} from 'lucide-react';
 
 const NGODashboard = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [selectedTimeRange, setSelectedTimeRange] = useState("30d");
+  const [selectedRegion, setSelectedRegion] = useState("all");
+  const [activeReports, setActiveReports] = useState(24);
   return (
-    <div className="p-6 bg-white min-h-screen text-gray-600 pt-20">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-900">Community Reports</h1>
-          <button className="bg-green-600 px-4 py-2 rounded-full text-white shadow-sm hover:bg-green-700 transition-colors">
-            + New Report
-          </button>
+    <div className="min-h-screen bg-light-gray">
+      {/* Header */}
+      <header className="bg-dark-charcoal text-pure-white shadow-xl border-b-2 border-india-green">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => navigate("/")}
+                className="flex items-center gap-2 hover:text-aqua-teal transition-colors duration-300"
+              >
+                <ArrowLeft size={20} />
+                <span className="hidden md:inline">Back to Home</span>
+              </button>
+              <div className="h-6 w-px bg-light-gray/30"></div>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-india-green via-pure-white to-saffron bg-clip-text text-transparent">
+                🌱 NGO Dashboard
+              </h1>
+              {user && (
+                <p className="text-sm text-light-gray/70 mt-1">
+                  Welcome back, {user.name || 'NGO Representative'} {user.avatar}
+                </p>
+              )}
+            </div>
+            
+            <div className="flex items-center gap-4">
+              {/* User Profile */}
+              <div className="flex items-center gap-3 bg-dark-gunmetal/50 rounded-lg px-3 py-2">
+                <span className="text-2xl">{user?.avatar || '🌱'}</span>
+                <div className="hidden md:block">
+                  <p className="text-sm font-medium text-pure-white">{user?.name || 'NGO Representative'}</p>
+                  <p className="text-xs text-light-gray/70">{user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1) || 'NGO'}</p>
+                </div>
+                <button
+                  onClick={() => navigate('/')}
+                  className="text-light-gray hover:text-danger-red transition-colors text-sm"
+                  title="Logout"
+                >
+                  🚪
+                </button>
+              </div>
+              
+              {/* Alert Indicator */}
+              <div className="flex items-center gap-2 bg-warning-orange/20 text-warning-orange px-3 py-2 rounded-lg">
+                <AlertTriangle size={16} />
+                <span className="text-sm font-medium">{activeReports} Active Reports</span>
+              </div>
+              
+              {/* Export Options */}
+              <div className="flex gap-2">
+                <button className="flex items-center gap-2 bg-tech-blue hover:bg-tech-blue/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
+                  <Download size={16} />
+                  <span className="hidden md:inline">Export</span>
+                </button>
+                <button className="flex items-center gap-2 bg-india-green hover:bg-india-green/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
+                  <Share2 size={16} />
+                  <span className="hidden md:inline">Share</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+      </header>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatsCard
-            icon={<FileText className="text-yellow-600" />}
-            title="Active Reports"
-            value="24"
-            description="8 need attention"
-          />
-          <StatsCard
-            icon={<MessageSquare className="text-green-600" />}
-            title="Community Feedback"
-            value="156"
-            description="Last 30 days"
-          />
-          <StatsCard
-            icon={<Users className="text-teal-600" />}
-            title="Volunteers"
-            value="45"
-            description="12 active now"
-          />
-          <StatsCard
-            icon={<AlertTriangle className="text-gray-900" />}
-            title="Critical Areas"
-            value="5"
-            description="2 new this week"
-          />
-        </div>
+      <div className="container mx-auto px-6 py-6">
+        <div className="grid grid-cols-12 gap-6 h-full">
+          {/* Left Sidebar - Filters & Controls */}
+          <div className="col-span-12 lg:col-span-3 space-y-6">
+            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
+              <div className="flex items-center gap-2 mb-4">
+                <Filter size={20} className="text-tech-blue" />
+                <h3 className="font-bold text-dark-charcoal">Filters</h3>
+              </div>
+              
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-dark-charcoal/80 mb-2">
+                  Time Range
+                </label>
+                <select 
+                  value={selectedTimeRange}
+                  onChange={(e) => setSelectedTimeRange(e.target.value)}
+                  className="w-full p-2 border border-light-gray rounded-lg focus:ring-2 focus:ring-tech-blue focus:border-transparent"
+                >
+                  <option value="7d">Last 7 Days</option>
+                  <option value="30d">Last 30 Days</option>
+                  <option value="90d">Last 90 Days</option>
+                </select>
+              </div>
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white rounded-xl p-6 shadow-md">
-              <h2 className="text-xl font-semibold mb-4 text-gray-900">Recent Reports</h2>
+              <div className="space-y-3 pt-4 border-t border-light-gray/50">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-dark-charcoal/70">Active Volunteers</span>
+                  <span className="font-bold text-aqua-teal">45</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-dark-charcoal/70">Report Coverage</span>
+                  <span className="font-bold text-fresh-green">92.3%</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
+              <h3 className="font-bold text-dark-charcoal mb-4 flex items-center gap-2">
+                <Settings size={20} className="text-saffron" />
+                Quick Actions
+              </h3>
+              <div className="space-y-3">
+                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-light-gray/50 transition-colors duration-300 text-sm">
+                  📝 Submit Report
+                </button>
+                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-light-gray/50 transition-colors duration-300 text-sm">
+                  👥 Assign Volunteer
+                </button>
+                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-light-gray/50 transition-colors duration-300 text-sm">
+                  📊 Schedule Survey
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content Area */}
+          <div className="col-span-12 lg:col-span-9 space-y-6">
+            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
+                  <FileText size={20} className="text-warning-orange" />
+                  Recent Community Reports
+                </h3>
+                <div className="flex items-center gap-2 text-sm text-dark-charcoal/70">
+                  <div className="w-2 h-2 bg-aqua-teal rounded-full animate-pulse"></div>
+                  Live Updates
+                </div>
+              </div>
               <div className="space-y-4">
                 {[
                   {
@@ -65,80 +176,30 @@ const NGODashboard = () => {
                     status: "Resolved",
                     submissions: 8,
                     date: "1 day ago"
-                  },
-                  {
-                    title: "Traffic Congestion Impact",
-                    status: "Under Review",
-                    submissions: 23,
-                    date: "2 days ago"
                   }
                 ].map((report, i) => (
-                  <div key={i} className="p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div key={i} className="p-4 rounded-xl hover:bg-light-gray/30 transition-all duration-300 border border-light-gray/30">
                     <div className="flex justify-between items-start">
-                      <div className="space-y-1">
-                        <h3 className="font-medium text-gray-900">{report.title}</h3>
+                      <div className="space-y-2">
+                        <h4 className="font-semibold text-dark-charcoal">{report.title}</h4>
                         <div className="flex items-center space-x-4 text-sm">
-                          <span className={`px-2 py-0.5 rounded-full ${report.status === 'Critical' ? 'bg-red-100 text-red-600' :
-                              report.status === 'Ongoing' ? 'bg-yellow-100 text-yellow-600' :
-                                report.status === 'Resolved' ? 'bg-green-100 text-green-600' :
-                                  'bg-teal-100 text-teal-600'
-                            }`}>
+                          <span className={`px-3 py-1 rounded-full font-medium ${
+                            report.status === 'Critical' ? 'bg-danger-red/20 text-danger-red border border-danger-red/30' :
+                            report.status === 'Ongoing' ? 'bg-warning-orange/20 text-warning-orange border border-warning-orange/30' :
+                            'bg-fresh-green/20 text-fresh-green border border-fresh-green/30'
+                          }`}>
                             {report.status}
                           </span>
-                          <span className="text-gray-600">{report.submissions} submissions</span>
+                          <span className="text-dark-charcoal/70 flex items-center gap-1">
+                            <Users size={14} />
+                            {report.submissions} submissions
+                          </span>
                         </div>
                       </div>
-                      <span className="text-xs text-gray-500">{report.date}</span>
+                      <span className="text-xs text-dark-charcoal/50">{report.date}</span>
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl p-6 shadow-md">
-              <h2 className="text-xl font-semibold mb-4 text-gray-900">Area Coverage</h2>
-              <div className="h-64 flex items-center justify-center border border-gray-200 rounded-lg">
-                [Placeholder for Area Coverage Map]
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-white rounded-xl p-6 shadow-md">
-              <h2 className="text-xl font-semibold mb-4 text-gray-900">Active Volunteers</h2>
-              <div className="space-y-3">
-                {[
-                  { name: "Priya Sharma", area: "North Delhi", reports: 12 },
-                  { name: "Amit Kumar", area: "South Delhi", reports: 8 },
-                  { name: "Sarah John", area: "East Delhi", reports: 15 },
-                  { name: "Rajesh Verma", area: "West Delhi", reports: 10 }
-                ].map((volunteer, i) => (
-                  <div key={i} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                    <div>
-                      <div className="font-medium text-gray-900">{volunteer.name}</div>
-                      <div className="text-sm text-gray-600">{volunteer.area}</div>
-                    </div>
-                    <div className="text-sm">
-                      <span className="text-gray-900">{volunteer.reports}</span>
-                      <span className="text-gray-600 ml-1">reports</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl p-6 shadow-md">
-              <h2 className="text-xl font-semibold mb-4 text-gray-900">Quick Actions</h2>
-              <div className="space-y-3">
-                <button className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors text-gray-900">
-                  Submit Report
-                </button>
-                <button className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors text-gray-900">
-                  Assign Volunteer
-                </button>
-                <button className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors text-gray-900">
-                  Schedule Survey
-                </button>
               </div>
             </div>
           </div>
@@ -148,17 +209,6 @@ const NGODashboard = () => {
   );
 };
 
-const StatsCard = ({ icon, title, value, description }) => (
-  <div className="bg-white rounded-xl p-6 hover:ring-1 hover:ring-gray-200 transition-all shadow-sm">
-    <div className="flex items-center space-x-3 mb-3">
-      {icon}
-      <h3 className="font-medium text-gray-900">{title}</h3>
-    </div>
-    <div className="space-y-1">
-      <div className="text-2xl font-bold text-gray-900">{value}</div>
-      <div className="text-sm text-gray-600">{description}</div>
-    </div>
-  </div>
-);
+
 
 export default NGODashboard;

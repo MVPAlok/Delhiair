@@ -25,6 +25,44 @@ const Header = () => {
     navigate('/');
   };
 
+  const goToDashboard = () => {
+    if (user) {
+      switch (user.role) {
+        case 'policymaker':
+          navigate('/dashboards/policy');
+          break;
+        case 'researcher':
+          navigate('/dashboards/research');
+          break;
+        case 'ngo':
+          navigate('/dashboards/ngo');
+          break;
+        case 'citizen':
+          navigate('/dashboards/citizen');
+          break;
+        default:
+          navigate('/dashboards/citizen');
+      }
+    }
+  };
+
+  const getDashboardText = () => {
+    if (!user) return "Dashboard";
+    
+    switch (user.role) {
+      case 'policymaker':
+        return "Policy Dashboard";
+      case 'researcher':
+        return "Research Dashboard";
+      case 'ngo':
+        return "NGO Dashboard";
+      case 'citizen':
+        return "Citizen Dashboard";
+      default:
+        return "Dashboard";
+    }
+  };
+
   return (
     <header className="bg-dark-charcoal/95 backdrop-blur-sm text-light-gray fixed top-0 left-0 right-0 z-50 shadow-xl border-b border-saffron/20">
       <nav className="container mx-auto px-6 py-2 flex justify-between items-center">
@@ -66,22 +104,31 @@ const Header = () => {
         {/* Auth Buttons or User Menu */}
         <div className="hidden md:flex items-center space-x-4">
           {user ? (
-            <div className="relative group">
-              <button className="flex items-center space-x-2 bg-dark-gunmetal px-4 py-2 rounded-full hover:bg-dark-gunmetal/80 transition-colors">
-                <User size={20} />
-                <span>{user.name}</span>
+            <>
+              <button
+                onClick={goToDashboard}
+                className="text-aqua-teal hover:text-pure-white transition-colors duration-300 font-medium flex items-center gap-2"
+              >
+                <span className="text-lg">{user.avatar || '📊'}</span>
+                {getDashboardText()}
               </button>
-              <div className="absolute right-0 mt-2 w-48 py-2 bg-dark-gunmetal rounded-lg shadow-xl invisible group-hover:visible transition-all">
-                <div className="px-4 py-2 text-sm text-light-gray capitalize">{user.role}</div>
-                <div className="border-t border-saffron/20"></div>
-                <button
-                  onClick={handleLogout}
-                  className="block w-full text-left px-4 py-2 text-sm text-light-gray hover:text-pure-white hover:bg-dark-charcoal/50 transition-colors"
-                >
-                  Sign Out
+              <div className="relative group">
+                <button className="flex items-center space-x-2 bg-dark-gunmetal px-4 py-2 rounded-full hover:bg-dark-gunmetal/80 transition-colors">
+                  <User size={20} />
+                  <span>{user.name}</span>
                 </button>
+                <div className="absolute right-0 mt-2 w-48 py-2 bg-dark-gunmetal rounded-lg shadow-xl invisible group-hover:visible transition-all">
+                  <div className="px-4 py-2 text-sm text-light-gray capitalize">{user.role}</div>
+                  <div className="border-t border-saffron/20"></div>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 text-sm text-light-gray hover:text-pure-white hover:bg-dark-charcoal/50 transition-colors"
+                  >
+                    Sign Out
+                  </button>
+                </div>
               </div>
-            </div>
+            </>
           ) : (
             <>
               <button
@@ -145,8 +192,17 @@ const Header = () => {
                   Signed in as <span className="font-medium">{user.name}</span>
                 </div>
                 <button
-                  onClick={handleLogout}
+                  onClick={() => {
+                    goToDashboard();
+                    setIsMenuOpen(false);
+                  }}
                   className="block w-full text-left text-aqua-teal hover:text-pure-white transition-colors duration-300 font-medium"
+                >
+                  {getDashboardText()}
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left text-danger-red hover:text-pure-white transition-colors duration-300 font-medium"
                 >
                   Sign Out
                 </button>
