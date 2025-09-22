@@ -113,8 +113,8 @@ const NGODashboard = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-6 relative">
-        <div className="grid grid-cols-12 gap-6 h-full">
+      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 relative">
+        <div className="grid grid-cols-12 gap-4 sm:gap-6 h-full">
           {/* Enhanced Left Sidebar */}
           <div className="col-span-12 lg:col-span-3 space-y-6">
             {/* NGO Filters Card */}
