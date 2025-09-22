@@ -122,233 +122,308 @@ const PolicyDashboard = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
-        <div className="grid grid-cols-12 gap-4 sm:gap-6 h-full">
-          {/* Left Sidebar - Filters & Controls */}
-          <div className="col-span-12 lg:col-span-3 space-y-6">
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
+      <div className="container mx-auto px-4 sm:px-6 py-6">
+        {/* Dashboard Control Panel */}
+        <div className="bg-gradient-to-r from-pure-white to-light-gray/30 rounded-2xl shadow-lg border border-light-gray/50 p-6 mb-8">
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Filters Section */}
+            <div className="lg:w-1/3">
               <div className="flex items-center gap-2 mb-4">
                 <Filter size={20} className="text-tech-blue" />
-                <h3 className="font-bold text-dark-charcoal">Filters</h3>
+                <h3 className="font-bold text-dark-charcoal">Control Panel</h3>
               </div>
               
-              {/* Time Range Filter */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-dark-charcoal/80 mb-2">
-                  Time Range
-                </label>
-                <select 
-                  value={selectedTimeRange}
-                  onChange={(e) => setSelectedTimeRange(e.target.value)}
-                  className="w-full p-2 border border-light-gray rounded-lg focus:ring-2 focus:ring-tech-blue focus:border-transparent"
-                >
-                  {timeRanges.map((range) => (
-                    <option key={range.value} value={range.value}>
-                      {range.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Region Filter */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-dark-charcoal/80 mb-2">
-                  Region
-                </label>
-                <select 
-                  value={selectedRegion}
-                  onChange={(e) => setSelectedRegion(e.target.value)}
-                  className="w-full p-2 border border-light-gray rounded-lg focus:ring-2 focus:ring-tech-blue focus:border-transparent"
-                >
-                  {regions.map((region) => (
-                    <option key={region.value} value={region.value}>
-                      {region.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Quick Stats */}
-              <div className="space-y-3 pt-4 border-t border-light-gray/50">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-dark-charcoal/70">Active Stations</span>
-                  <span className="font-bold text-aqua-teal">24</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                {/* Time Range Filter */}
+                <div>
+                  <label className="block text-sm font-medium text-dark-charcoal/80 mb-2">
+                    📅 Time Range
+                  </label>
+                  <select 
+                    value={selectedTimeRange}
+                    onChange={(e) => setSelectedTimeRange(e.target.value)}
+                    className="w-full p-3 border border-light-gray rounded-lg focus:ring-2 focus:ring-tech-blue focus:border-transparent bg-pure-white shadow-sm"
+                  >
+                    {timeRanges.map((range) => (
+                      <option key={range.value} value={range.value}>
+                        {range.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-dark-charcoal/70">Data Coverage</span>
-                  <span className="font-bold text-fresh-green">98.5%</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-dark-charcoal/70">Last Update</span>
-                  <span className="font-bold text-tech-blue">2 min ago</span>
+
+                {/* Region Filter */}
+                <div>
+                  <label className="block text-sm font-medium text-dark-charcoal/80 mb-2">
+                    🗺️ Region
+                  </label>
+                  <select 
+                    value={selectedRegion}
+                    onChange={(e) => setSelectedRegion(e.target.value)}
+                    className="w-full p-3 border border-light-gray rounded-lg focus:ring-2 focus:ring-tech-blue focus:border-transparent bg-pure-white shadow-sm"
+                  >
+                    {regions.map((region) => (
+                      <option key={region.value} value={region.value}>
+                        {region.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </div>
 
-            {/* Quick Actions */}
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <h3 className="font-bold text-dark-charcoal mb-4 flex items-center gap-2">
-                <Settings size={20} className="text-saffron" />
+            {/* Quick Stats Section */}
+            <div className="lg:w-1/3">
+              <h4 className="font-semibold text-dark-charcoal mb-4 flex items-center gap-2">
+                📊 System Status
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3">
+                <div className="bg-pure-white rounded-lg p-4 border border-light-gray/30 shadow-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-dark-charcoal/70">Active Stations</span>
+                    <span className="font-bold text-aqua-teal text-lg">24</span>
+                  </div>
+                </div>
+                <div className="bg-pure-white rounded-lg p-4 border border-light-gray/30 shadow-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-dark-charcoal/70">Data Coverage</span>
+                    <span className="font-bold text-fresh-green text-lg">98.5%</span>
+                  </div>
+                </div>
+                <div className="bg-pure-white rounded-lg p-4 border border-light-gray/30 shadow-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-dark-charcoal/70">Last Update</span>
+                    <span className="font-bold text-tech-blue text-sm">2 min ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Actions Section */}
+            <div className="lg:w-1/3">
+              <h4 className="font-semibold text-dark-charcoal mb-4 flex items-center gap-2">
+                <Settings size={18} className="text-saffron" />
                 Quick Actions
-              </h3>
-              <div className="space-y-3">
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-light-gray/50 transition-colors duration-300 text-sm">
+              </h4>
+              <div className="grid grid-cols-2 lg:grid-cols-1 gap-2">
+                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-tech-blue/10 hover:text-tech-blue transition-all duration-300 text-sm bg-pure-white border border-light-gray/30 shadow-sm">
                   📊 Generate Report
                 </button>
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-light-gray/50 transition-colors duration-300 text-sm">
+                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-danger-red/10 hover:text-danger-red transition-all duration-300 text-sm bg-pure-white border border-light-gray/30 shadow-sm">
                   🚨 Set Alert Threshold
                 </button>
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-light-gray/50 transition-colors duration-300 text-sm">
+                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-india-green/10 hover:text-india-green transition-all duration-300 text-sm bg-pure-white border border-light-gray/30 shadow-sm">
                   📧 Schedule Updates
                 </button>
-                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-light-gray/50 transition-colors duration-300 text-sm">
+                <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-aqua-teal/10 hover:text-aqua-teal transition-all duration-300 text-sm bg-pure-white border border-light-gray/30 shadow-sm">
                   🔄 Refresh Data
                 </button>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Main Content Area */}
-          <div className="col-span-12 lg:col-span-6 space-y-6">
-            {/* Real-Time AQI Monitoring */}
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
-                  <MapPin size={20} className="text-danger-red" />
-                  Real-Time AQI Monitoring
-                </h3>
-                <div className="flex items-center gap-2 text-sm text-dark-charcoal/70">
-                  <div className="w-2 h-2 bg-aqua-teal rounded-full animate-pulse"></div>
-                  Live Data
-                </div>
+        {/* Main Dashboard Grid */}
+        <div className="space-y-8">
+          {/* Top Row - Real-time Monitoring */}
+          <section>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1 h-8 bg-gradient-to-b from-danger-red to-warning-orange rounded-full"></div>
+              <h2 className="text-2xl font-bold text-dark-charcoal">🔴 Real-Time Monitoring</h2>
+              <div className="flex items-center gap-2 text-sm text-dark-charcoal/70 ml-auto">
+                <div className="w-2 h-2 bg-aqua-teal rounded-full animate-pulse"></div>
+                <span>Live Data Stream</span>
               </div>
-              <AQIHeatMap selectedRegion={selectedRegion} />
             </div>
-
-            {/* Station Data Table */}
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
-                  <Activity size={20} className="text-tech-blue" />
-                  Station-wise AQI Data
-                </h3>
-                <button className="text-sm text-tech-blue hover:underline">
-                  View All Stations
-                </button>
-              </div>
-              <StationDataTable timeRange={selectedTimeRange} />
-            </div>
-
-            {/* Source Contribution */}
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
-                  <Target size={20} className="text-saffron" />
-                  Source Contribution Breakdown
-                </h3>
-                <select className="text-sm border border-light-gray rounded px-2 py-1">
-                  <option>PM2.5</option>
-                  <option>PM10</option>
-                  <option>NO₂</option>
-                  <option>O₃</option>
-                </select>
-              </div>
-              <SourceContribution />
-            </div>
-
-            {/* Policy Effectiveness */}
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
-                  <FileText size={20} className="text-india-green" />
-                  Policy Effectiveness Tracker
-                </h3>
-                <button className="text-sm text-india-green hover:underline">
-                  View All Policies
-                </button>
-              </div>
-              <PolicyEffectiveness />
-            </div>
-          </div>
-
-          {/* Right Sidebar - AI Insights & Recommendations */}
-          <div className="col-span-12 lg:col-span-3 space-y-6">
-            {/* Forecasting Panel */}
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
-                  <TrendingUp size={20} className="text-warning-orange" />
-                  Forecasting
-                </h3>
-                <div className="text-xs text-dark-charcoal/60">72hr outlook</div>
-              </div>
-              <ForecastingPanel />
-            </div>
-
-            {/* AI Recommendations */}
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
-                  🤖 AI Insights
-                </h3>
-                <div className="w-2 h-2 bg-fresh-green rounded-full animate-pulse"></div>
-              </div>
-              <AIRecommendations />
-            </div>
-
-            {/* Active Alerts */}
-            <div className="bg-pure-white rounded-xl shadow-lg p-6 border border-light-gray/50">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
-                  <AlertTriangle size={20} className="text-danger-red" />
-                  Active Alerts
-                </h3>
-                <span className="text-xs bg-danger-red/20 text-danger-red px-2 py-1 rounded-full">
-                  {activeAlerts} Critical
-                </span>
-              </div>
-              <div className="space-y-3">
-                <div className="p-3 bg-danger-red/10 border border-danger-red/30 rounded-lg">
-                  <div className="flex items-start gap-2">
-                    <AlertTriangle size={16} className="text-danger-red mt-0.5" />
-                    <div>
-                      <div className="font-semibold text-sm text-danger-red">Severe AQI Alert</div>
-                      <div className="text-xs text-dark-charcoal/70 mt-1">
-                        Anand Vihar crossing 450 AQI. Immediate action required.
-                      </div>
-                      <div className="text-xs text-dark-charcoal/50 mt-1">2 min ago</div>
+            
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              {/* AQI Heat Map */}
+              <div className="bg-pure-white rounded-2xl shadow-lg border border-light-gray/50 overflow-hidden">
+                <div className="bg-gradient-to-r from-danger-red/10 to-warning-orange/10 p-6 border-b border-light-gray/30">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
+                      <MapPin size={20} className="text-danger-red" />
+                      AQI Heat Map
+                    </h3>
+                    <div className="text-xs bg-danger-red/20 text-danger-red px-3 py-1 rounded-full font-medium">
+                      Critical Zones: 3
                     </div>
                   </div>
                 </div>
-                
-                <div className="p-3 bg-warning-orange/10 border border-warning-orange/30 rounded-lg">
-                  <div className="flex items-start gap-2">
-                    <Clock size={16} className="text-warning-orange mt-0.5" />
-                    <div>
-                      <div className="font-semibold text-sm text-warning-orange">Forecast Alert</div>
-                      <div className="text-xs text-dark-charcoal/70 mt-1">
-                        AQI expected to rise 40% in next 6 hours due to low wind speed.
-                      </div>
-                      <div className="text-xs text-dark-charcoal/50 mt-1">15 min ago</div>
+                <div className="p-6">
+                  <AQIHeatMap selectedRegion={selectedRegion} />
+                </div>
+              </div>
+
+              {/* Station Data Overview */}
+              <div className="bg-pure-white rounded-2xl shadow-lg border border-light-gray/50 overflow-hidden">
+                <div className="bg-gradient-to-r from-tech-blue/10 to-aqua-teal/10 p-6 border-b border-light-gray/30">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
+                      <Activity size={20} className="text-tech-blue" />
+                      Station Overview
+                    </h3>
+                    <button className="text-sm text-tech-blue hover:underline font-medium">
+                      View All Stations →
+                    </button>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <StationDataTable timeRange={selectedTimeRange} />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Middle Row - Analysis & Insights */}
+          <section>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1 h-8 bg-gradient-to-b from-tech-blue to-aqua-teal rounded-full"></div>
+              <h2 className="text-2xl font-bold text-dark-charcoal">📊 Analysis & Insights</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              {/* Source Contribution */}
+              <div className="bg-pure-white rounded-2xl shadow-lg border border-light-gray/50 overflow-hidden">
+                <div className="bg-gradient-to-r from-saffron/10 to-warning-orange/10 p-6 border-b border-light-gray/30">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
+                      <Target size={20} className="text-saffron" />
+                      Pollution Sources
+                    </h3>
+                    <select className="text-sm border border-light-gray rounded-lg px-3 py-1 bg-pure-white">
+                      <option>PM2.5</option>
+                      <option>PM10</option>
+                      <option>NO₂</option>
+                      <option>O₃</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <SourceContribution />
+                </div>
+              </div>
+
+              {/* Forecasting Panel */}
+              <div className="bg-pure-white rounded-2xl shadow-lg border border-light-gray/50 overflow-hidden">
+                <div className="bg-gradient-to-r from-warning-orange/10 to-danger-red/10 p-6 border-b border-light-gray/30">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
+                      <TrendingUp size={20} className="text-warning-orange" />
+                      AQI Forecasting
+                    </h3>
+                    <div className="text-xs text-dark-charcoal/60 bg-warning-orange/20 px-3 py-1 rounded-full">
+                      72hr outlook
                     </div>
                   </div>
                 </div>
-                
-                <div className="p-3 bg-tech-blue/10 border border-tech-blue/30 rounded-lg">
-                  <div className="flex items-start gap-2">
-                    <Users size={16} className="text-tech-blue mt-0.5" />
-                    <div>
-                      <div className="font-semibold text-sm text-tech-blue">Citizen Report</div>
-                      <div className="text-xs text-dark-charcoal/70 mt-1">
-                        Multiple dust storm reports from Gurugram sector 14.
+                <div className="p-6">
+                  <ForecastingPanel />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Bottom Row - Policy Management & AI */}
+          <section>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1 h-8 bg-gradient-to-b from-india-green to-fresh-green rounded-full"></div>
+              <h2 className="text-2xl font-bold text-dark-charcoal">🏛️ Policy Management & AI Assistance</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+              {/* Policy Effectiveness */}
+              <div className="xl:col-span-2 bg-pure-white rounded-2xl shadow-lg border border-light-gray/50 overflow-hidden">
+                <div className="bg-gradient-to-r from-india-green/10 to-fresh-green/10 p-6 border-b border-light-gray/30">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-dark-charcoal flex items-center gap-2">
+                      <FileText size={20} className="text-india-green" />
+                      Policy Effectiveness Tracker
+                    </h3>
+                    <button className="text-sm text-india-green hover:underline font-medium">
+                      View All Policies →
+                    </button>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <PolicyEffectiveness />
+                </div>
+              </div>
+
+              {/* AI Recommendations & Alerts */}
+              <div className="space-y-6">
+                {/* AI Recommendations */}
+                <div className="bg-pure-white rounded-2xl shadow-lg border border-light-gray/50 overflow-hidden">
+                  <div className="bg-gradient-to-r from-aqua-teal/10 to-tech-blue/10 p-4 border-b border-light-gray/30">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-bold text-dark-charcoal flex items-center gap-2 text-sm">
+                        🤖 AI Assistant
+                      </h3>
+                      <div className="w-2 h-2 bg-fresh-green rounded-full animate-pulse"></div>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <AIRecommendations />
+                  </div>
+                </div>
+
+                {/* Active Alerts - Compact */}
+                <div className="bg-pure-white rounded-2xl shadow-lg border border-light-gray/50 overflow-hidden">
+                  <div className="bg-gradient-to-r from-danger-red/10 to-warning-orange/10 p-4 border-b border-light-gray/30">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-bold text-dark-charcoal flex items-center gap-2 text-sm">
+                        <AlertTriangle size={16} className="text-danger-red" />
+                        Critical Alerts
+                      </h3>
+                      <span className="text-xs bg-danger-red/20 text-danger-red px-2 py-1 rounded-full font-medium">
+                        {activeAlerts} Active
+                      </span>
+                    </div>
+                  </div>
+                  <div className="p-4 space-y-3 max-h-64 overflow-y-auto">
+                    <div className="p-3 bg-danger-red/10 border border-danger-red/30 rounded-lg">
+                      <div className="flex items-start gap-2">
+                        <AlertTriangle size={14} className="text-danger-red mt-0.5" />
+                        <div>
+                          <div className="font-semibold text-xs text-danger-red">Severe AQI Alert</div>
+                          <div className="text-xs text-dark-charcoal/70 mt-1">
+                            Anand Vihar: 450 AQI
+                          </div>
+                          <div className="text-xs text-dark-charcoal/50 mt-1">2 min ago</div>
+                        </div>
                       </div>
-                      <div className="text-xs text-dark-charcoal/50 mt-1">1 hour ago</div>
+                    </div>
+                    
+                    <div className="p-3 bg-warning-orange/10 border border-warning-orange/30 rounded-lg">
+                      <div className="flex items-start gap-2">
+                        <Clock size={14} className="text-warning-orange mt-0.5" />
+                        <div>
+                          <div className="font-semibold text-xs text-warning-orange">Forecast Alert</div>
+                          <div className="text-xs text-dark-charcoal/70 mt-1">
+                            AQI +40% in 6hrs
+                          </div>
+                          <div className="text-xs text-dark-charcoal/50 mt-1">15 min ago</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="p-3 bg-tech-blue/10 border border-tech-blue/30 rounded-lg">
+                      <div className="flex items-start gap-2">
+                        <Users size={14} className="text-tech-blue mt-0.5" />
+                        <div>
+                          <div className="font-semibold text-xs text-tech-blue">Citizen Reports</div>
+                          <div className="text-xs text-dark-charcoal/70 mt-1">
+                            Dust storms: Gurugram
+                          </div>
+                          <div className="text-xs text-dark-charcoal/50 mt-1">1 hour ago</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </div>
