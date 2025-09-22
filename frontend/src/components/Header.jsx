@@ -66,12 +66,19 @@ const Header = () => {
   return (
     <header className="bg-dark-charcoal/95 backdrop-blur-sm text-light-gray fixed top-0 left-0 right-0 z-50 shadow-xl border-b border-saffron/20">
       <nav className="container mx-auto px-6 py-2 flex justify-between items-center">
-        <button
-          onClick={() => scrollToSection("hero")}
-          className="font-extrabold text-2xl tracking-wider bg-gradient-to-r from-saffron via-pure-white to-india-green bg-clip-text text-transparent hover:scale-105 transition-transform"
-        >
-          DelhiAir.AI
-        </button>
+        <div className="flex items-center gap-3 group">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Emblem_of_India.svg/564px-Emblem_of_India.svg.png?20250731133507"
+            alt="National Emblem of India"
+            className="w-7 h-9 group-hover:scale-110 transition-transform filter brightness-0 invert opacity-95"
+          />
+          <button
+            onClick={() => scrollToSection("hero")}
+            className="font-extrabold text-2xl tracking-wider bg-gradient-to-r from-saffron via-pure-white to-india-green bg-clip-text text-transparent group-hover:scale-105 transition-transform"
+          >
+            DelhiAir.AI
+          </button>
+        </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
