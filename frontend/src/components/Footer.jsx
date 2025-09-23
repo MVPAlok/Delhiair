@@ -25,7 +25,7 @@ const Footer = () => {
             <div className="flex space-x-4 pt-4">
               {/* Twitter/X */}
               <a 
-                href="https://twitter.com/alokyadav0707" 
+                href="https://x.com/mvp_alok" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gradient-to-br from-light-gray/20 to-light-gray/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-aqua-teal/30 hover:to-tech-blue/20 transition-all duration-300 cursor-pointer border border-light-gray/10 hover:border-aqua-teal/40 hover:scale-110 group"
@@ -37,7 +37,7 @@ const Footer = () => {
               
               {/* LinkedIn */}
               <a 
-                href="https://www.linkedin.com/in/alok-yadav-6ba852295/" 
+                href="https://linkedin.com/in/alokyadav0707" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gradient-to-br from-light-gray/20 to-light-gray/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-tech-blue/30 hover:to-aqua-teal/20 transition-all duration-300 cursor-pointer border border-light-gray/10 hover:border-tech-blue/40 hover:scale-110 group"
@@ -49,7 +49,7 @@ const Footer = () => {
               
               {/* GitHub */}
               <a 
-                href="https://github.com/MVPAlok/Delhiair" 
+                href="https://github.com/alokyadav0707" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gradient-to-br from-light-gray/20 to-light-gray/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gradient-to-br hover:from-india-green/30 hover:to-saffron/20 transition-all duration-300 cursor-pointer border border-light-gray/10 hover:border-india-green/40 hover:scale-110 group"
@@ -124,7 +124,7 @@ const Footer = () => {
             
             {/* Designer Credit */}
             <div className="flex items-center space-x-3">
-              <a 
+              {/* <a 
                 href="https://alokyadav-portfolio.netlify.app/" 
                 target="_blank" 
                 rel="noopener noreferrer"
@@ -139,7 +139,7 @@ const Footer = () => {
                 <svg className="w-3 h-3 text-light-gray/50 group-hover:text-aqua-teal transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
-              </a>
+              </a> */}
             </div>
           </div>
           
