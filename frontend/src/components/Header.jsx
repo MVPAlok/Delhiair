@@ -70,7 +70,7 @@ const Header = () => {
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Emblem_of_India.svg/564px-Emblem_of_India.svg.png?20250731133507"
             alt="National Emblem of India"
-            className="w-10 h-10 group-hover:scale-110 transition-transform filter brightness-0 invert opacity-95"
+            className="w-7 h-9 group-hover:scale-110 transition-transform filter brightness-0 invert opacity-95"
           />
           <button
             onClick={() => scrollToSection("hero")}

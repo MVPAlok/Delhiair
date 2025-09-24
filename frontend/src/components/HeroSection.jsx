@@ -178,7 +178,7 @@ const HeroSection = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
         style={{
-          backgroundImage: `url('')`
+          backgroundImage: `url('https://videos.openai.com/vg-assets/assets%2Ftask_01k5vrcb2aekbvz9vq3t1m1f8s%2F1758647052_img_1.webp?st=2025-09-23T16%3A02%3A26Z&se=2025-09-29T17%3A02%3A26Z&sks=b&skt=2025-09-23T16%3A02%3A26Z&ske=2025-09-29T17%3A02%3A26Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=8ffff87a-01f1-47c9-9090-32999d4d6380&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=0FuDfcSvdj1%2FdR6%2BAlAAzGEfmvp0UJ8xhH8f3ssMOE4%3D&az=oaivgprodscus')`
         }}
       />
       
