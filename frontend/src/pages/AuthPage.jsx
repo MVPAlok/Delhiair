@@ -92,9 +92,9 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-dark-charcoal via-dark-charcoal/90 to-tech-blue/20">
+    <div className="h-screen overflow-hidden bg-gradient-to-br from-dark-charcoal via-dark-charcoal/90 to-tech-blue/20">
       {/* Header */}
-      <header className="p-6">
+      <header className="p-4">
         <div className="flex items-center gap-4">
           <button
             onClick={goBack}
@@ -110,11 +110,11 @@ const AuthPage = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-4 py-6">
         <div className="max-w-4xl mx-auto">
           {/* Demo Credentials Banner */}
-          <div className="bg-tech-blue/10 border border-tech-blue/20 rounded-xl p-6 mb-8">
-            <h3 className="text-tech-blue font-bold mb-4 flex items-center gap-2">
+          <div className="bg-tech-blue/10 border border-tech-blue/20 rounded-xl p-4 mb-6">
+            <h3 className="text-tech-blue font-bold mb-3 flex items-center gap-2">
               🎯 Demo Credentials (For Testing)
             </h3>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -132,9 +132,9 @@ const AuthPage = () => {
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+          <div className="grid lg:grid-cols-2 gap-6 items-start">
             {/* Role Selection / Info Panel */}
-            <div className="bg-pure-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
+            <div className="bg-pure-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 max-h-[70vh] overflow-y-auto">
               <h2 className="text-3xl font-bold text-dark-charcoal mb-6">
                 {isLogin ? 'Welcome Back!' : 'Choose Your Role'}
               </h2>
@@ -200,7 +200,7 @@ const AuthPage = () => {
             </div>
 
             {/* Login/Signup Form */}
-            <div className="bg-pure-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
+            <div className="bg-pure-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 max-h-[70vh] overflow-y-auto">
               <div className="flex justify-center mb-8">
                 <div className="bg-light-gray/30 rounded-full p-1 flex">
                   <button
