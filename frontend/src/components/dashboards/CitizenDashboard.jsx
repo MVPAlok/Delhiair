@@ -20,6 +20,30 @@ import {
   Droplets,
   Sun
 } from 'lucide-react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
 const CitizenDashboard = () => {
   const navigate = useNavigate();
@@ -27,6 +51,128 @@ const CitizenDashboard = () => {
   const [selectedLocation, setSelectedLocation] = useState("current");
   const [currentAQI, setCurrentAQI] = useState(156);
   const [activeAlerts, setActiveAlerts] = useState(3);
+
+  // Generate dummy AQI data for the last 24 hours
+  const generateAQIData = () => {
+    const hours = [];
+    const aqiValues = [];
+    
+    // Generate 24 data points (one for each hour)
+    for (let i = 23; i >= 0; i--) {
+      const hour = new Date();
+      hour.setHours(hour.getHours() - i);
+      hours.push(`${hour.getHours()}:00`);
+      
+      // Generate realistic AQI values with some variation
+      // Base value around 150 with some fluctuation
+      const baseValue = 150;
+      const variation = Math.sin(i * 0.5) * 30 + (Math.random() * 20 - 10);
+      const value = Math.max(50, Math.min(300, baseValue + variation));
+      aqiValues.push(Math.round(value));
+    }
+    
+    return { hours, aqiValues };
+  };
+
+  const { hours, aqiValues } = generateAQIData();
+
+  // Chart configuration
+  const chartData = {
+    labels: hours,
+    datasets: [
+      {
+        label: 'AQI Level',
+        data: aqiValues,
+        borderColor: 'rgb(59, 130, 246)',
+        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+        borderWidth: 3,
+        pointBackgroundColor: 'rgb(59, 130, 246)',
+        pointRadius: 3,
+        pointHoverRadius: 6,
+        fill: true,
+        tension: 0.4
+      }
+    ]
+  };
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        backgroundColor: 'rgba(30, 41, 59, 0.9)',
+        titleColor: 'rgb(199, 210, 254)',
+        bodyColor: 'white',
+        borderColor: 'rgb(99, 102, 241)',
+        borderWidth: 1,
+        cornerRadius: 8,
+        displayColors: false
+      }
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+          drawBorder: false
+        },
+        ticks: {
+          color: 'rgb(100, 116, 139)',
+          maxRotation: 0,
+          autoSkip: true,
+          maxTicksLimit: 8
+        }
+      },
+      y: {
+        min: 0,
+        max: 300,
+        grid: {
+          color: 'rgba(203, 213, 225, 0.3)',
+          drawBorder: false
+        },
+        ticks: {
+          color: 'rgb(100, 116, 139)',
+          stepSize: 50,
+          callback: function(value) {
+            if (value === 50) return 'Good';
+            if (value === 100) return 'Satisfactory';
+            if (value === 150) return 'Moderate';
+            if (value === 200) return 'Poor';
+            if (value === 250) return 'Very Poor';
+            if (value === 300) return 'Severe';
+            return value;
+          }
+        }
+      }
+    },
+    interaction: {
+      intersect: false,
+      mode: 'index'
+    }
+  };
+
+  // PDF export function
+  const handleExportPDF = async () => {
+    const { generateSimplePDF } = await import('../../lib/pdfUtils');
+    
+    const dashboardData = {
+      'Current AQI': currentAQI,
+      'Location': 'Delhi, India',
+      'Active Alerts': activeAlerts,
+      'PM2.5 Level': '85 μg/m³',
+      'Temperature': '28°C',
+      'Status': 'Moderate'
+    };
+    
+    generateSimplePDF(
+      'Citizen Dashboard', 
+      user?.name || 'Citizen', 
+      user?.role || 'citizen', 
+      dashboardData
+    );
+  };
 
   return (
     <div className="min-h-screen bg-light-gray">
@@ -93,6 +239,13 @@ const CitizenDashboard = () => {
                   <button className="flex items-center gap-1 sm:gap-2 bg-danger-red hover:bg-danger-red/80 text-white px-2 sm:px-4 py-2 rounded-lg transition-colors duration-300 text-xs sm:text-sm">
                     <Bell size={14} className="sm:w-4 sm:h-4" />
                     <span className="hidden sm:inline">Alerts</span>
+                  </button>
+                  <button 
+                    onClick={handleExportPDF}
+                    className="flex items-center gap-1 sm:gap-2 bg-aqua-teal hover:bg-aqua-teal/80 text-white px-2 sm:px-4 py-2 rounded-lg transition-colors duration-300 text-xs sm:text-sm"
+                  >
+                    <Download size={14} className="sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline">Export</span>
                   </button>
                   <button className="flex items-center gap-1 sm:gap-2 bg-aqua-teal hover:bg-aqua-teal/80 text-white px-2 sm:px-4 py-2 rounded-lg transition-colors duration-300 text-xs sm:text-sm">
                     <Share2 size={14} className="sm:w-4 sm:h-4" />
@@ -192,13 +345,8 @@ const CitizenDashboard = () => {
                   <option>Last 30 Days</option>
                 </select>
               </div>
-              <div className="h-64 flex items-center justify-center border-2 border-dashed border-blue-300/50 rounded-2xl bg-gradient-to-br from-blue-50/50 to-cyan-50/50 backdrop-blur-sm relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400/5 via-transparent to-cyan-400/5 animate-pulse"></div>
-                <div className="text-center text-slate-700 relative z-10">
-                  <TrendingUp size={64} className="mx-auto mb-4 text-blue-500/60 animate-bounce" />
-                  <p className="font-semibold text-lg mb-2">AQI Trend Analysis</p>
-                  <p className="text-sm text-slate-600">Interactive chart showing air quality changes</p>
-                </div>
+              <div className="h-64">
+                <Line data={chartData} options={chartOptions} />
               </div>
             </div>
 

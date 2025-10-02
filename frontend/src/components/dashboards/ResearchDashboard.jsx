@@ -75,6 +75,29 @@ const ResearchDashboard = () => {
     { type: 'model', title: 'LSTM-based Forecasting Model', shared: 12, downloads: 567, rating: 4.9 }
   ];
 
+  // PDF export function
+  const handleExportPDF = async () => {
+    const { generateSimplePDF } = await import('../../lib/pdfUtils');
+    
+    const dashboardData = {
+      'Active Models': activeModels,
+      'Selected Model': selectedModel,
+      'Forecast Range': forecastRange,
+      'Selected Dataset': selectedDataset,
+      'Selected Time Range': selectedTimeRange,
+      'Data Points': '1.2M',
+      'Active Stations': 50,
+      'Model Accuracy': '94.5%'
+    };
+    
+    generateSimplePDF(
+      'Research Dashboard', 
+      user?.name || 'Researcher', 
+      user?.role || 'researcher', 
+      dashboardData
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50">
       {/* Animated Background Elements */}
@@ -136,7 +159,10 @@ const ResearchDashboard = () => {
                 
                 {/* Action Buttons */}
                 <div className="flex gap-1 sm:gap-2">
-                  <button className="flex items-center gap-1 sm:gap-2 bg-tech-blue hover:bg-tech-blue/80 text-white px-2 sm:px-4 py-2 rounded-lg transition-colors duration-300 text-xs sm:text-sm">
+                  <button 
+                    onClick={handleExportPDF}
+                    className="flex items-center gap-1 sm:gap-2 bg-tech-blue hover:bg-tech-blue/80 text-white px-2 sm:px-4 py-2 rounded-lg transition-colors duration-300 text-xs sm:text-sm"
+                  >
                     <Download size={14} className="sm:w-4 sm:h-4" />
                     <span className="hidden sm:inline">Export</span>
                   </button>
@@ -151,6 +177,7 @@ const ResearchDashboard = () => {
         </div>
       </header>
 
+      {/* ... rest of the component remains unchanged ... */}
       <div className="container mx-auto px-4 sm:px-6 py-6 relative">
         <div className="grid grid-cols-12 gap-4 sm:gap-6 h-full">
           {/* Left Sidebar - Filters & Controls */}

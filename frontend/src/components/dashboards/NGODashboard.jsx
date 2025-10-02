@@ -43,6 +43,29 @@ const NGODashboard = () => {
   const [citizenReports, setCitizenReports] = useState(8);
   const [pendingValidation, setPendingValidation] = useState(5);
 
+  // PDF export function
+  const handleExportPDF = async () => {
+    const { generateSimplePDF } = await import('../../lib/pdfUtils');
+    
+    const dashboardData = {
+      'Active Reports': activeReports,
+      'Citizen Reports': citizenReports,
+      'Pending Validation': pendingValidation,
+      'Selected Time Range': selectedTimeRange,
+      'Selected Region': selectedRegion,
+      'Active Volunteers': 45,
+      'Report Coverage': '92.3%',
+      'Pending Reviews': pendingValidation
+    };
+    
+    generateSimplePDF(
+      'NGO Dashboard', 
+      user?.name || 'NGO Representative', 
+      user?.role || 'ngo', 
+      dashboardData
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50">
       {/* Animated Background Elements */}
@@ -99,7 +122,10 @@ const NGODashboard = () => {
               
               {/* Export Options */}
               <div className="flex gap-2">
-                <button className="flex items-center gap-2 bg-fresh-green hover:bg-fresh-green/80 text-white px-4 py-2 rounded-lg transition-colors duration-300">
+                <button 
+                  onClick={handleExportPDF}
+                  className="flex items-center gap-2 bg-fresh-green hover:bg-fresh-green/80 text-white px-4 py-2 rounded-lg transition-colors duration-300"
+                >
                   <Download size={16} />
                   <span className="hidden md:inline">Export</span>
                 </button>
@@ -113,6 +139,7 @@ const NGODashboard = () => {
         </div>
       </header>
 
+      {/* ... rest of the component remains unchanged ... */}
       <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 relative">
         <div className="grid grid-cols-12 gap-4 sm:gap-6 h-full">
           {/* Enhanced Left Sidebar */}

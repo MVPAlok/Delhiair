@@ -53,6 +53,26 @@ const PolicyDashboard = () => {
     { value: "faridabad", label: "Faridabad" }
   ];
 
+  // PDF export function
+  const handleExportPDF = async () => {
+    const { generateSimplePDF } = await import('../lib/pdfUtils');
+    
+    const dashboardData = {
+      'Selected Time Range': timeRanges.find(r => r.value === selectedTimeRange)?.label || selectedTimeRange,
+      'Selected Region': regions.find(r => r.value === selectedRegion)?.label || selectedRegion,
+      'Active Alerts': activeAlerts,
+      'Active Stations': 24,
+      'Data Coverage': '98.5%'
+    };
+    
+    generateSimplePDF(
+      'Policy Dashboard', 
+      user?.name || 'Policy Maker', 
+      user?.role || 'policymaker', 
+      dashboardData
+    );
+  };
+
   return (
     <div className="min-h-screen bg-light-gray">
       {/* Header */}
@@ -107,7 +127,10 @@ const PolicyDashboard = () => {
                 
                 {/* Export Options */}
                 <div className="flex gap-2">
-                  <button className="flex items-center gap-2 bg-tech-blue hover:bg-tech-blue/80 text-white px-3 sm:px-4 py-2 rounded-lg transition-colors duration-300">
+                  <button 
+                    onClick={handleExportPDF}
+                    className="flex items-center gap-2 bg-tech-blue hover:bg-tech-blue/80 text-white px-3 sm:px-4 py-2 rounded-lg transition-colors duration-300"
+                  >
                     <Download size={16} />
                     <span className="hidden md:inline">Export</span>
                   </button>
@@ -122,6 +145,7 @@ const PolicyDashboard = () => {
         </div>
       </header>
 
+      {/* ... rest of the component remains unchanged ... */}
       <div className="container mx-auto px-4 sm:px-6 py-6">
         {/* Dashboard Control Panel */}
         <div className="bg-gradient-to-r from-pure-white to-light-gray/30 rounded-2xl shadow-lg border border-light-gray/50 p-6 mb-8">

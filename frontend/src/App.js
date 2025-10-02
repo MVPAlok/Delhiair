@@ -8,6 +8,7 @@ import NGODashboard from "./components/dashboards/NGODashboard";
 import CitizenDashboard from "./components/dashboards/CitizenDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./contexts/AuthContext";
+import TestPage from "./pages/TestPage";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
                 </ProtectedRoute>
               } 
             />
+            <Route path="/test" element={<TestPage />} />
           </Routes>
         </BrowserRouter>
       </div>
