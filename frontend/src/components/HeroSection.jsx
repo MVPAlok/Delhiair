@@ -178,7 +178,7 @@ const HeroSection = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
         style={{
-          backgroundImage: `url(https://videos.openai.com/vg-assets/assets%2Ftask_01k5vrcb2aekbvz9vq3t1m1f8s%2F1758647052_img_1.webp?st=2025-09-30T09%3A18%3A54Z&se=2025-10-06T10%3A18%3A54Z&sks=b&skt=2025-09-30T09%3A18%3A54Z&ske=2025-10-06T10%3A18%3A54Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=8ebb0df1-a278-4e2e-9c20-f2d373479b3a&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=hPLfN78uoefPtR3F3uTAZEPm5P1UBpzBWy5Wf36O8v0%3D&az=oaivgprodscus)`
+          backgroundImage: `url(https://videos.openai.com/az/vg-assets/assets%2Ftask_01k5vrcb2aekbvz9vq3t1m1f8s%2F1758647052_img_1.webp?se=2025-10-22T08%3A37%3A30Z&sp=r&sv=2024-08-04&sr=b&skoid=aa5ddad1-c91a-4f0a-9aca-e20682cc8969&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-10-16T05%3A09%3A40Z&ske=2025-10-23T05%3A14%3A40Z&sks=b&skv=2024-08-04&sig=dCQenZtVCpidDiKrg4tx3dYLqBwdWLGPcjhTD0%2BKsoc%3D&ac=oaivgprodscus)`
         }}
       />
       
