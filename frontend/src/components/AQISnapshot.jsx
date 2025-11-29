@@ -417,5 +417,5 @@ const AQISnapshot = () => {
     </section>
   );
 };
-//end.
+//end...
 export default AQISnapshot;
