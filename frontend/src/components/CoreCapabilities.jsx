@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Target, TrendingUp, Shield, FileText } from "lucide-react";
 
-// Mock data
+// Mock data.
 const mockFeatures = [
   {
     id: 1,
