@@ -156,5 +156,5 @@ const Footer = () => {
     </footer>
   );
 };
-// Export the Footer component
+// Export the Footer component..
 export default Footer;
