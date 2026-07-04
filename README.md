@@ -611,7 +611,7 @@ The platform includes advanced visualization capabilities:
 - **Heatmaps**: Geographical visualization of pollution zones
 - **Trend Analysis**: Historical data analysis
 - **Comparative Analytics**: Station-to-station comparisons
-- **Custom Reports**: User-generated visualizations
+- **Custom Reports**: User-generated visualizations.
 
 ---
 
