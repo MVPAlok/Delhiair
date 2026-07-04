@@ -73,7 +73,7 @@ Create a sustainable, healthy urban environment through collaborative intelligen
 - Area coverage monitoring
 - Campaign effectiveness metrics
 - Real-time alert system
-- Community report aggregation
+- Community report aggregation.
 
 #### **Citizen Dashboard**
 
